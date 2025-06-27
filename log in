@@ -10,70 +10,102 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
+    :root {
+      --circle-color: #0095FF; /* Default blue */
+    }
+
+    body.teacher-mode {
+      --circle-color: #8e44ad; /* Purple */
+    }
+
     body {
-      background: #f5f5f5;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background-color: white;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
       position: relative;
+      overflow: hidden;
+    }
+
+    body::before, body::after {
+      content: '';
+      position: fixed;
+	  bottom: 0;
+	  right: 2;
+      background-color: var(--circle-color);
+      border-radius: 50%;
+      z-index: 0;
+    }
+
+    body::before {
+      width: 300px;
+      height: 300px;
+      top: -80px;
+      left: 300px;
+    }
+
+    body::after {
+      width: 250px;
+      height: 250px;
+      bottom: -70px;
+      right: 300px;
     }
 
     .top-left-logo {
       position: absolute;
       top: 20px;
       left: 20px;
-      max-width: 250px;
+      width: 180px;
+      z-index: 1;
     }
 
     .container {
-      background: #A9A9A9;
-      padding: 40px 30px;
-      border-radius: 10px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+      background: rgba(200, 200, 200, 0.5);
+      padding: 50px 30px;
+      border-radius: 25px;
       width: 100%;
-      max-width: 380px;
+      max-width: 360px;
       text-align: center;
+      z-index: 1;
     }
 
     h2 {
-      margin-bottom: 30px;
-      color: #2196F3;
-      font-weight: bold;
-    }
-
-    label {
-      display: block;
-      text-align: left;
-      margin: 15px 0 5px;
-      font-weight: bold;
-      color: #2E3A59;
+      margin-top: 0;
+      color: #333;
+      letter-spacing: 1px;
     }
 
     input[type="text"],
     input[type="password"],
     input[type="email"] {
       width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 20px;
+      padding: 12px;
+      margin: 12px 0;
+      border: none;
+      border-radius: 25px;
+      background-color: #6c757d;
+      color: #fff;
       font-size: 14px;
-	  color: #71797E;
+    }
+
+    input::placeholder {
+      color: #dcdcdc;
     }
 
     .login-button {
       width: 100%;
-      padding: 12px;
-      background-color: #002244;
+      padding: 14px;
+      background-color: #25364b;
       border: none;
-      color: #ffffff;
+      color: white;
       font-size: 16px;
       font-weight: bold;
-      border-radius: 5px;
-      cursor: pointer;
+      border-radius: 4px;
       margin-top: 20px;
-      transition: background-color 0.3s ease;
+      cursor: pointer;
     }
 
     .login-button:hover {
@@ -87,9 +119,9 @@
     }
 
     .switch-link a {
-      color: #2196F3;
+      color: #25364b;
       text-decoration: none;
-      font-weight: 500;
+      font-weight: bold;
     }
 
     .switch-link a:hover {
@@ -98,51 +130,43 @@
   </style>
 </head>
 <body>
-
-  <!-- Logo in the top-left corner -->
+  <!-- Logo -->
   <img src="5680d962-8a13-4c0f-b601-1305457c0862.png" alt="NeuroGrade Logo" class="top-left-logo">
 
-  <!-- Login box -->
-  <div class="container" id="login-box">
+  <!-- Login Form -->
+  <div class="container">
     <h2 id="form-title">LOGIN</h2>
 
     <form id="login-form">
-      <label id="label1" for="input1">Student Number</label>
-      <input type="text" id="input1" required>
-
-      <label for="password">Password</label>
-      <input type="password" id="password" required>
-
+      <input type="text" id="input1" placeholder="student number" required>
+      <input type="password" id="password" placeholder="password" required>
+      <div class="switch-link">
+        <a href="#" onclick="switchForm(true)">teacher login</a>
+      </div>
       <button type="submit" class="login-button">LOG IN</button>
     </form>
-
-    <div class="switch-link">
-      <span id="switch-text">Are you a teacher? <a href="#" onclick="switchForm(true)">Teacher login</a></span>
-    </div>
   </div>
 
   <script>
     function switchForm(isTeacher) {
-      const title = document.getElementById('form-title');
-      const label1 = document.getElementById('label1');
+      const body = document.body;
       const input1 = document.getElementById('input1');
-      const switchText = document.getElementById('switch-text');
+      const switchText = document.querySelector('.switch-link a');
 
       if (isTeacher) {
-        title.textContent = 'LOGIN';
-        label1.textContent = 'Email';
+        body.classList.add('teacher-mode');
         input1.type = 'email';
-        input1.placeholder = 'you@example.com';
-        switchText.innerHTML = 'Are you a student? <a href="#" onclick="switchForm(false)">Student login</a>';
+        input1.placeholder = 'email';
+        switchText.textContent = 'student login';
+        switchText.setAttribute('onclick', 'switchForm(false)');
       } else {
-        title.textContent = 'LOGIN';
-        label1.textContent = 'Student Number';
+        body.classList.remove('teacher-mode');
         input1.type = 'text';
-        input1.placeholder = '';
-        switchText.innerHTML = 'Are you a teacher? <a href="#" onclick="switchForm(true)">Teacher login</a>';
+        input1.placeholder = 'student number';
+        switchText.textContent = 'teacher login';
+        switchText.setAttribute('onclick', 'switchForm(true)');
       }
     }
   </script>
-
 </body>
 </html>
