@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Neuro Grade Practice Tasks</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #white;
+  }
+  /* Header */
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #white;
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px (0,0,0,0.1);
+  }
+  /* Logo */
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+  .logo img {
+    height: 40px;
+    margin-right: 10px;
+  }
+  /* User info */
+  .user-info {
+    display: flex;
+    align-items: center;
+  }
+  .user-info img {
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  /* Sidebar */
+  .sidebar {
+    width: 220px;
+    background-color: #blue;
+    height: calc(100vh - 60px);
+    padding-top: 20px;
+    box-shadow: 2px 0 5px (0,0,0,0.1);
+    position: fixed;
+    top: 60px;
+    left: 0;
+  }
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+  }
+  .sidebar li {
+    padding: 15px 20px;
+    cursor: pointer;
+  }
+  .sidebar li:hover {
+    background-color: #blue;
+  }
+  .sidebar .active {
+    background-color: #White;
+  }
+  /* Main content */
+  .main {
+    margin-left: 220px;
+    padding: 20px;
+    margin-top: 60px;
+  }
+  /* Practice Tasks Cards */
+  .cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .card {
+    background-color: #white;
+    border-radius: 8px;
+    width: 200px;
+    padding: 15px;
+    box-shadow: 0 2px 4px (0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .card h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.1em;
+    text-align: center;
+  }
+  .view-btn {
+    background-color: #white;
+    color: #blue;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+  }
+  .view-btn:hover {
+    background-color: #white;
+  }
+  /* Practice Tasks Details */
+  .task-details {
+    display: none;
+    margin-top: 20px;
+  }
+  .task-card {
+    background-color: #white;
+    color: #blue;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    position: relative;
+  }
+  .task-card h4 {
+    margin: 0 0 10px 0;
+  }
+  .buttons {
+    display: flex;
+    gap: 10px;
+  }
+  .btn {
+    background-color: #white;
+    color: #white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .btn:hover {
+    background-color: #white;
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="logo">
+    <img src="https://via.placeholder.com/40" alt="Neuro Grade Logo" />
+    <h2>Neuro Grade</h2>
+  </div>
+  <div class="user-info">
+    <img src="https://via.placeholder.com/40" alt="User Profile" />
+    <span>Bat-Man</span>
+  </div>
+</header>
+
+<!-- Sidebar -->
+<div class="sidebar">
+  <ul>
+    <li class="active" onclick="showSection('practice')">Practice</li>
+    <li onclick="showSection('home')">Home</li>
+    <li onclick="showSection('tests')">Tests</li>
+    <li onclick="showSection('assignments')">Assignments</li>
+    <li onclick="showSection('feedback')">Feedback</li>
+  </ul>
+</div>
+
+<!-- Main Content -->
+<div class="main">
+  <!-- Practice Tasks Section -->
+  <div id="practice-section" style="display: block;">
+    <h2>Practice Tasks</h2>
+    <div class="cards-container" id="practice-cards">
+      <!-- Practice cards will be injected here -->
+    </div>
+  </div>
+  
+  <!-- Practice Detail View -->
+  <div id="practice-detail" style="display: none;">
+    <button class="btn" onclick="backToPractice()">Back</button>
+    <div id="task-details-container">
+      <!-- Task details will be injected here -->
+    </div>
+  </div>
+</div>
+
+<script>
+  // Data for practice tasks
+  const practiceTasks = [
+    { code: 'MATH511', title: 'JUNE EXAM 2019', progress: '78%' },
+    { code: 'HCI721', title: 'NOVEMBER EXAM 2019', progress: null },
+    { code: 'PRO712', title: 'JUNE EXAM 2020', progress: '89%' },
+    { code: 'SS443', title: 'NOVEMBER EXAM 2020', progress: null }
+  ];
+
+  // Function to generate practice cards
+  function loadPracticeCards() {
+    const container = document.getElementById('practice-cards');
+    container.innerHTML = '';
+    practiceTasks.forEach((task, index) => {
+      const card = document.createElement('div');
+      card.className = 'card';
+
+      const title = document.createElement('h3');
+      title.innerText = task.code;
+
+      const btn = document.createElement('button');
+      btn.className = 'view-btn';
+      btn.innerText = 'view';
+      btn.onclick = () => showTaskDetails(task);
+
+      card.appendChild(title);
+      card.appendChild(btn);
+
+      container.appendChild(card);
+    });
+  }
+
+  // Show task details
+  function showTaskDetails(task) {
+    document.getElementById('practice-section').style.display = 'none';
+    document.getElementById('practice-detail').style.display = 'block';
+
+    const container = document.getElementById('task-details-container');
+    container.innerHTML = '';
+
+    // Example details based on task
+    const taskCard = document.createElement('div');
+    taskCard.className = 'task-card';
+
+    const taskTitle = document.createElement('h4');
+    taskTitle.innerText = task.code;
+
+    const info = document.createElement('p');
+    info.innerText = `${task.title} (${task.code})`;
+
+    const buttonsDiv = document.createElement('div');
+    buttonsDiv.className = 'buttons';
+
+    const retryBtn = document.createElement('button');
+    retryBtn.className = 'btn';
+    retryBtn.innerText = 'retry attempt';
+    retryBtn.onclick = () => alert('Retry attempt clicked!');
+
+    const startBtn = document.createElement('button');
+    startBtn.className = 'btn';
+    startBtn.innerText = 'start attempt';
+    startBtn.onclick = () => alert('Start attempt clicked!');
+
+    buttonsDiv.appendChild(retryBtn);
+    buttonsDiv.appendChild(startBtn);
+
+    taskCard.appendChild(taskTitle);
+    taskCard.appendChild(info);
+    taskCard.appendChild(buttonsDiv);
+
+    container.appendChild(taskCard);
+  }
+
+  // Back to practice list
+  function backToPractice() {
+    document.getElementById('practice-section').style.display = 'block';
+    document.getElementById('practice-detail').style.display = 'none';
+  }
+
+  // Sidebar navigation
+  function showSection(section) {
+    // For simplicity, only Practice section is functional here
+    // You can expand this to handle other sections
+    alert(`Navigate to ${section}`);
+  }
+
+  // Initialize
+  loadPracticeCards();
+</script>
+</body>
+</html>
