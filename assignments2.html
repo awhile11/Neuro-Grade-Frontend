@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NeuroGrade - Assignment Upload</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Poppins', sans-serif; }
+
+    body { display:flex; background:#f5f7fa; height:100vh; overflow:hidden; }
+
+    /* Sidebar */
+    .sidebar {
+      width:220px; background:#fff; padding:20px 0; border-right:1px solid #ddd;
+      display:flex; flex-direction:column; align-items:center; transition: transform 0.3s ease-in-out;
+    }
+    .sidebar.hidden { transform: translateX(-100%); }
+
+    .logo { display:flex; align-items:center; margin-bottom:40px; padding:0 20px; }
+    .logo img { width:40px; margin-right:10px; }
+    .logo h2 { font-size:18px; color:#0077ff; font-weight:600; }
+
+    .nav { list-style:none; width:100%; }
+    .nav li { width:100%; margin-bottom:10px; }
+    .nav a {
+      display:flex; align-items:center; gap:10px; padding:12px 20px;
+      color:#333; text-decoration:none; font-weight:500; border-radius:8px;
+      margin:0 10px; transition: all 0.3s;
+    }
+    .nav a:hover { background:#eaf3ff; color:#0077ff; }
+    .nav a.active { background:#0077ff; color:#fff; }
+    .nav a i { font-size:16px; }
+
+    /* Toggle Button */
+    .toggle-btn {
+      display:none; position:absolute; top:15px; left:15px; background:#0077ff; color:#fff;
+      border:none; font-size:22px; border-radius:6px; cursor:pointer; padding:5px 10px; z-index:1000;
+    }
+
+    /* Topbar */
+    .topbar {
+      position: fixed; top:0; left:220px; right:0; height:60px;
+      background:#fff; border-bottom:1px solid #ddd;
+      display:flex; justify-content:flex-end; align-items:center; padding:0 20px; z-index:100;
+    }
+    .topbar img { width:40px; height:40px; border-radius:50%; margin-left:15px; }
+    .user-info { text-align:right; margin-left:10px; }
+    .username { font-weight:bold; }
+    .subtext { font-size:12px; color:#777; }
+
+    /* Main content */
+    .main { flex:1; padding:80px 30px 20px; overflow-y:auto; }
+
+    /* Upload page styles */
+    .page-title { font-size:1.5rem; font-weight:600; color:#1f2937; text-align:center; margin-bottom:3rem; }
+    .upload-container { display:flex; gap:2rem; max-width:1000px; margin:0 auto; }
+    .upload-section, .submission-section {
+      flex:1; background:#fff; border-radius:12px; padding:2rem; box-shadow:0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    .drop-zone {
+      background: linear-gradient(135deg,#3B82F6,#1D4ED8);
+      border-radius:12px; padding:3rem; text-align:center; color:#fff; position:relative;
+      cursor:pointer; transition: all 0.3s ease; border:3px dashed rgba(255,255,255,0.3);
+      min-height:300px; display:flex; flex-direction:column; justify-content:center; align-items:center;
+    }
+    .drop-zone:hover { background: linear-gradient(135deg,#2563EB,#1E40AF); transform:translateY(-2px); }
+    .drop-zone.dragover { border-color: rgba(255,255,255,0.8); background: linear-gradient(135deg,#1E40AF,#1E3A8A); }
+    .upload-icon { font-size:3rem; margin-bottom:1rem; opacity:0.8; }
+    .upload-text { font-size:1.1rem; margin-bottom:0.5rem; }
+    .upload-subtext { font-size:0.9rem; opacity:0.8; }
+
+    .confirmation-text { font-size:0.95rem; line-height:1.6; text-align:left; margin-top:2rem; padding:1.5rem; background:rgba(255,255,255,0.1); border-radius:8px; }
+    .confirmation-text h3 { font-size:1rem; margin-bottom:1rem; font-weight:600; }
+
+    .file-input { display:none; }
+    .uploaded-file { background: linear-gradient(135deg,#3B82F6,#1D4ED8); color:white; padding:2rem 1.5rem; border-radius:12px; text-align:center; margin-bottom:2rem; width:100%; max-width:300px; display:none; }
+    .file-icon { font-size:2rem; margin-bottom:1rem; }
+    .file-name { font-size:1rem; font-weight:600; }
+
+    .checkbox-container { display:flex; align-items:flex-start; gap:1rem; margin-bottom:2rem; text-align:left; }
+    .custom-checkbox { width:24px; height:24px; border:2px solid #d1d5db; border-radius:4px; background:white; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all 0.2s; flex-shrink:0; margin-top:2px; }
+    .custom-checkbox.checked { background:#3B82F6; border-color:#3B82F6; }
+    .custom-checkbox.checked::after { content:'✓'; color:white; font-weight:bold; font-size:14px; }
+    .checkbox-label { font-size:0.9rem; line-height:1.5; color:#374151; cursor:pointer; }
+
+    .submit-btn { background:#3B82F6; color:white; padding:0.75rem 2rem; border:none; border-radius:25px; font-size:1rem; font-weight:500; cursor:pointer; transition: all 0.2s; }
+    .submit-btn:hover { background:#2563eb; transform:translateY(-1px); }
+    .submit-btn:disabled { background:#9ca3af; cursor:not-allowed; transform:none; }
+
+    .file-selected { background:#f0f9ff; border:2px solid #3B82F6; }
+    .progress-bar { width:100%; height:6px; background: rgba(255,255,255,0.3); border-radius:3px; margin-top:1rem; overflow:hidden; display:none; }
+    .progress-fill { height:100%; background:white; width:0%; transition: width 0.3s ease; }
+
+    @media (max-width:768px){
+      .sidebar { position:fixed; top:0; left:0; height:100%; z-index:999; }
+      .toggle-btn { display:block; }
+      body { flex-direction:column; }
+      .main { padding-top:60px; }
+    }
+  </style>
+</head>
+<body>
+
+  <button class="toggle-btn" id="toggleBtn">☰</button>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="logo">
+      <img src="#" alt="logo">
+      <h2>NeuroGrade</h2>
+    </div>
+    <ul class="nav">
+      <li><a href="#"><i class="fa-solid fa-house"></i> Home</a></li>
+      <li><a href="#"><i class="fa-solid fa-clipboard-list"></i> Tests</a></li>
+      <li><a href="#" class="active"><i class="fa-solid fa-book-open"></i> Assignments</a></li>
+      <li><a href="#"><i class="fa-solid fa-chalkboard-user"></i> Practice</a></li>
+      <li><a href="#"><i class="fa-solid fa-comments"></i> Feedback</a></li>
+    </ul>
+  </aside>
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <span>📧 💬</span>
+    <div class="user-info">
+      <div class="username">Bat-Man</div>
+      <div class="subtext">Bsc IT</div>
+    </div>
+    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User">
+  </div>
+
+  <main class="main">
+    <h1 class="page-title">ASSIGNMENT UPLOAD</h1>
+    
+    <div class="upload-container">
+      <div class="upload-section">
+        <div class="drop-zone" id="dropZone">
+          <input type="file" id="fileInput" class="file-input" accept=".pdf,.doc,.docx,.txt">
+          <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+          <div class="upload-text">Drop your file here or click to browse</div>
+          <div class="upload-subtext">Supported formats: PDF, DOC, DOCX, TXT</div>
+          <div class="confirmation-text">
+            <h3>Academic Integrity Declaration</h3>
+            <p>I hereby declare that this assignment is my own original work and has been completed without any unauthorized assistance...</p>
+          </div>
+          <div class="progress-bar" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
+        </div>
+      </div>
+
+      <div class="submission-section">
+        <div class="uploaded-file" id="uploadedFile">
+          <i class="fa-solid fa-file-pdf file-icon"></i>
+          <div class="file-name" id="fileName">AI745_Assignment.pdf</div>
+        </div>
+
+        <div class="checkbox-container">
+          <div class="custom-checkbox" id="confirmationCheckbox"></div>
+          <label class="checkbox-label" for="confirmationCheckbox">
+            I confirm that I have read and agree to the Academic Integrity Declaration above...
+          </label>
+        </div>
+
+        <button class="submit-btn" id="submitBtn" disabled>submit</button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Sidebar toggle
+    const toggleBtn = document.getElementById('toggleBtn');
+    const sidebar = document.getElementById('sidebar');
+    toggleBtn.addEventListener('click', () => { sidebar.classList.toggle('hidden'); });
+
+    // Upload logic
+    const dropZone = document.getElementById('dropZone');
+    const fileInput = document.getElementById('fileInput');
+    const uploadedFile = document.getElementById('uploadedFile');
+    const fileName = document.getElementById('fileName');
+    const confirmationCheckbox = document.getElementById('confirmationCheckbox');
+    const submitBtn = document.getElementById('submitBtn');
+    const progressBar = document.getElementById('progressBar');
+    const progressFill = document.getElementById('progressFill');
+
+    let selectedFile = null;
+    let isConfirmed = false;
+
+    dropZone.addEventListener('click', () => fileInput.click());
+    dropZone.addEventListener('dragover', (e)=>{e.preventDefault(); dropZone.classList.add('dragover');});
+    dropZone.addEventListener('dragleave', ()=>{dropZone.classList.remove('dragover');});
+    dropZone.addEventListener('drop', (e)=>{e.preventDefault(); dropZone.classList.remove('dragover'); if(e.dataTransfer.files.length>0) handleFile(e.dataTransfer.files[0]);});
+    fileInput.addEventListener('change', (e)=>{ if(e.target.files.length>0) handleFile(e.target.files[0]);});
+
+    function handleFile(file){
+      selectedFile=file; fileName.textContent=file.name; uploadedFile.style.display='block'; dropZone.classList.add('file-selected');
+      progressBar.style.display='block'; let progress=0; const interval=setInterval(()=>{progress+=10; progressFill.style.width=progress+'%'; if(progress>=100){clearInterval(interval); setTimeout(()=>{progressBar.style.display='none'; progressFill.style.width='0%';},500);}},100);
+      updateSubmitButton();
+    }
+
+    confirmationCheckbox.addEventListener('click', ()=>{
+      isConfirmed=!isConfirmed;
+      confirmationCheckbox.classList.toggle('checked',isConfirmed);
+      updateSubmitButton();
+    });
+    document.querySelector('.checkbox-label').addEventListener('click', ()=>{confirmationCheckbox.click();});
+
+    function updateSubmitButton(){
+      submitBtn.disabled=!(selectedFile && isConfirmed);
+    }
+
+    submitBtn.addEventListener('click', ()=>{
+      if(selectedFile && isConfirmed){
+        alert('Assignment submitted successfully!\nFile: '+selectedFile.name+'\nTime: '+new Date().toLocaleString());
+        selectedFile=null; isConfirmed=false; uploadedFile.style.display='none';
+        confirmationCheckbox.classList.remove('checked'); dropZone.classList.remove('file-selected'); fileInput.value=''; updateSubmitButton();
+      }
+    });
+
+    // Navigation highlight
+    document.querySelectorAll('.nav a').forEach(item=>{item.addEventListener('click',function(e){e.preventDefault(); document.querySelectorAll('.nav a').forEach(nav=>nav.classList.remove('active')); this.classList.add('active');});});
+  </script>
+</body>
+</html>

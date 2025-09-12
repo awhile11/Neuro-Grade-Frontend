@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NeuroGrade - Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    body { display: flex; background: #f5f7fa; height: 100vh; overflow: hidden; }
+
+    /* Sidebar */
+    .sidebar {
+      width: 220px;
+      background: #fff;
+      padding: 20px 0;
+      border-right: 1px solid #ddd;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.3s ease-in-out;
+    }
+    .sidebar.hidden { transform: translateX(-100%); }
+    .logo { display: flex; align-items: center; margin-bottom: 40px; padding: 0 20px; }
+    .logo img { width: 40px; margin-right: 10px; }
+    .logo h2 { font-size: 18px; color: #0077ff; font-weight: 600; }
+    .nav { list-style: none; width: 100%; padding: 0; }
+    .nav li { width: 100%; margin-bottom: 10px; }
+    .nav a {
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 20px; color: #333; text-decoration: none; font-weight: 500; border-radius: 8px;
+      margin: 0 10px; transition: all 0.3s;
+    }
+    .nav a:hover { background: #eaf3ff; color: #0077ff; }
+    .nav a.active { background: #0077ff; color: #fff; }
+    .nav a i { font-size: 16px; }
+
+    /* Toggle Button */
+    .toggle-btn {
+      display: none; position: absolute; top: 15px; left: 15px;
+      background: #0077ff; color: #fff; border: none; font-size: 22px;
+      border-radius: 6px; cursor: pointer; padding: 5px 10px; z-index: 1000;
+    }
+
+    /* Topbar */
+    .topbar {
+      position: fixed; top: 0; left: 220px; right: 0; height: 60px;
+      background: #fff; border-bottom: 1px solid #ddd;
+      display: flex; justify-content: flex-end; align-items: center; padding: 0 20px;
+      z-index: 100;
+    }
+    .topbar img { width: 40px; height: 40px; border-radius: 50%; margin-left: 15px; }
+    .user-info { text-align: right; margin-left: 10px; }
+    .username { font-weight: bold; }
+    .subtext { font-size: 12px; color: #777; }
+
+    /* Main content */
+    .main-content {
+      flex: 1; padding: 80px 30px 20px; overflow-y: auto;
+    }
+
+    .content-section {
+      background-color: #fff; border-radius: 12px; padding: 2rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-bottom: 2rem;
+    }
+    .section-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 1.5rem; color: #1f2937; }
+
+    .test-item {
+      background-color: #f8fafc; border: 1px solid #e2e8f0;
+      border-radius: 8px; padding: 1rem; margin-bottom: 0.5rem; transition: all 0.2s;
+    }
+    .test-item:hover { border-color: #3B82F6; transform: translateY(-1px); }
+    .test-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+    .test-title { font-size: 1.1rem; font-weight: 600; color: #1f2937; }
+    .test-details { display: flex; gap: 2rem; color: #6b7280; font-size: 0.9rem; }
+    .view-btn { background-color: #3B82F6; color: white; padding: 0.25rem 0.75rem; border-radius: 16px; font-size: 0.8rem; border: none; cursor: pointer; }
+
+    .more-link { text-align: center; padding: 1rem; color: #6b7280; cursor: pointer; border-top: 1px solid #e5e7eb; }
+
+    @media (max-width: 768px) {
+      .sidebar { position: fixed; top: 0; left: 0; height: 100%; z-index: 999; }
+      .toggle-btn { display: block; }
+      body { flex-direction: column; }
+      .main-content { padding-top: 60px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Toggle Button -->
+  <button class="toggle-btn" id="toggleBtn">☰</button>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="logo">
+      <img src="#" alt="logo">
+      <h2>NeuroGrade</h2>
+    </div>
+    <ul class="nav">
+      <li><a href="#"><i class="fa-solid fa-house"></i> Home</a></li>
+      <li><a href="#" class="active"><i class="fa-solid fa-clipboard-list"></i> Tests</a></li>
+      <li><a href="#"><i class="fa-solid fa-book-open"></i> Assignments</a></li>
+      <li><a href="#"><i class="fa-solid fa-chalkboard-user"></i> Practice</a></li>
+      <li><a href="#"><i class="fa-solid fa-comments"></i> Feedback</a></li>
+    </ul>
+  </aside>
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <span>📧 💬</span>
+    <div class="user-info">
+      <div class="username">Bat-Man</div>
+      <div class="subtext">Bsc IT</div>
+    </div>
+    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User">
+  </div>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Previous Tests Section -->
+    <section class="content-section">
+      <h2 class="section-title">PREVIOUS TEST</h2>
+      <div class="test-item">
+        <div class="test-header">
+          <div class="test-title">AI700 CA TEST June 2024</div>
+          <button class="view-btn">view</button>
+        </div>
+        <div class="test-details"><span>Duration 2hr</span><span>78/100</span></div>
+      </div>
+      <div class="test-item">
+        <div class="test-header">
+          <div class="test-title">HIT500 EXAM Nov 2024</div>
+          <button class="view-btn">view</button>
+        </div>
+        <div class="test-details"><span>Duration 3hr</span><span>85/100</span></div>
+      </div>
+      <div class="test-item">
+        <div class="test-header">
+          <div class="test-title">MATH451 EXAM June 2023</div>
+          <button class="view-btn">view</button>
+        </div>
+        <div class="test-details"><span>Duration 2.5hr</span><span>92/100</span></div>
+      </div>
+      <div class="more-link">——————— more</div>
+    </section>
+
+    <!-- New Test Section -->
+    <section class="content-section">
+      <h2 class="section-title">NEW TEST</h2>
+      <div class="test-item">
+        <div class="test-header">
+          <div class="test-title">HIT500 EXAM Nov 2025</div>
+          <button class="view-btn">attempt</button>
+        </div>
+        <div class="test-details"><span>Duration 3hr</span><span></span></div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Sidebar toggle
+    const toggleBtn = document.getElementById('toggleBtn');
+    const sidebar = document.getElementById('sidebar');
+    toggleBtn.addEventListener('click', () => sidebar.classList.toggle('hidden'));
+
+    // Navigation active state
+    document.querySelectorAll('.nav a').forEach(item => {
+      item.addEventListener('click', e => {
+        e.preventDefault();
+        document.querySelectorAll('.nav a').forEach(nav => nav.classList.remove('active'));
+        item.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

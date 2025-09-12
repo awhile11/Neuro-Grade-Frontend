@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NeuroGrade - Assignments</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      display: flex;
+      background: #f5f7fa;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 220px;
+      background: #fff;
+      padding: 20px 0;
+      border-right: 1px solid #ddd;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: transform 0.3s ease-in-out;
+    }
+    .sidebar.hidden {
+      transform: translateX(-100%);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      margin-bottom: 40px;
+      padding: 0 20px;
+    }
+    .logo img {
+      width: 40px;
+      margin-right: 10px;
+    }
+    .logo h2 {
+      font-size: 18px;
+      color: #0077ff;
+      font-weight: 600;
+    }
+
+    .nav {
+      list-style: none;
+      width: 100%;
+    }
+    .nav li {
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    .nav a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 20px;
+      color: #333;
+      text-decoration: none;
+      font-weight: 500;
+      border-radius: 8px;
+      margin: 0 10px;
+      transition: all 0.3s;
+    }
+    .nav a:hover {
+      background: #eaf3ff;
+      color: #0077ff;
+    }
+    .nav a.active {
+      background: #0077ff;
+      color: #fff;
+    }
+    .nav a i {
+      font-size: 16px;
+    }
+
+    /* Toggle Button */
+    .toggle-btn {
+      display: none;
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: #0077ff;
+      color: #fff;
+      border: none;
+      font-size: 22px;
+      border-radius: 6px;
+      cursor: pointer;
+      padding: 5px 10px;
+      z-index: 1000;
+    }
+
+    /* Topbar */
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 220px;
+      right: 0;
+      height: 60px;
+      background: #fff;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 0 20px;
+      z-index: 100;
+    }
+    .topbar img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-left: 15px;
+    }
+    .user-info {
+      text-align: right;
+      margin-left: 10px;
+    }
+    .username {
+      font-weight: bold;
+    }
+    .subtext {
+      font-size: 12px;
+      color: #777;
+    }
+
+    /* Main content */
+    .main {
+      flex: 1;
+      padding: 80px 30px 20px;
+      overflow-y: auto;
+    }
+
+    /* Assignments Page Content */
+    .content {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .section {
+      flex: 1;
+      min-width: 300px;
+    }
+    h2 {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+    .assignment {
+      padding: 12px;
+      margin-bottom: 10px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .assignment small {
+      color: gray;
+      display: block;
+    }
+    .view-btn {
+      background: #0077ff;
+      color: #fff;
+      border: none;
+      padding: 5px 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .view-btn:hover {
+      background: #0056b3;
+    }
+
+    .upload-box {
+      border: 2px dashed #0077ff;
+      border-radius: 10px;
+      padding: 40px;
+      text-align: center;
+      background: #f8f9ff;
+      color: #0077ff;
+      margin-bottom: 15px;
+      cursor: pointer;
+    }
+    .upload-btn {
+      background: #0077ff;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .upload-btn:hover {
+      background: #0056b3;
+    }
+
+    .recent-list {
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 10px;
+    }
+    .file-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .file-item:last-child {
+      border-bottom: none;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        z-index: 999;
+      }
+      .toggle-btn {
+        display: block;
+      }
+      body {
+        flex-direction: column;
+      }
+      .main {
+        padding-top: 60px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Toggle Button -->
+  <button class="toggle-btn" id="toggleBtn">☰</button>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="logo">
+      <img src="#" alt="logo">
+      <h2>NeuroGrade</h2>
+    </div>
+    <ul class="nav">
+      <li><a href="Home.html"><i class="fa-solid fa-house"></i> Home</a></li>
+      <li><a href="tests.html"><i class="fa-solid fa-clipboard-list"></i> Tests</a></li>
+      <li><a href="#" class="active"><i class="fa-solid fa-book-open"></i> Assignments</a></li>
+      <li><a href="#"><i class="fa-solid fa-chalkboard-user"></i> Practice</a></li>
+      <li><a href="#"><i class="fa-solid fa-comments"></i> Feedback</a></li>
+    </ul>
+  </aside>
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <span>📧 💬</span>
+    <div class="user-info">
+      <div class="username">Bat-Man</div>
+      <div class="subtext">Bsc IT</div>
+    </div>
+    <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="User">
+  </div>
+
+  <!-- Main Content -->
+  <main class="main">
+    <div class="content">
+      <!-- Posted Assignments -->
+      <div class="section">
+        <h2>POSTED ASSIGNMENTS</h2>
+        <div class="assignment">
+          <div><b>MATH511</b><small>Due 23 September</small></div>
+          <button class="view-btn">view</button>
+        </div>
+        <div class="assignment">
+          <div><b>PRO712</b><small>Due 21 October</small></div>
+          <button class="view-btn">view</button>
+        </div>
+        <div class="assignment">
+          <div><b>AI745</b><small>Due 04 August</small></div>
+          <button class="view-btn">view</button>
+        </div>
+      </div>
+
+      <!-- Upload Section -->
+      <div class="section">
+        <h2>ASSIGNMENT UPLOAD</h2>
+        <div class="upload-box" id="uploadBox">Drag and drop your file here</div>
+        <button class="upload-btn">upload</button>
+
+        <h2>RECENTLY UPLOADED FILES</h2>
+        <div class="recent-list" id="recentFiles">
+          <div class="file-item"><span>📄 HCI1671.....</span><small>12/05/2025</small></div>
+          <div class="file-item"><span>📄 SS711.....</span><small>21/07/2025</small></div>
+          <div class="file-item"><span>📄 AI745.....</span><small>01/07/2025</small></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Sidebar toggle
+    const toggleBtn = document.getElementById('toggleBtn');
+    const sidebar = document.getElementById('sidebar');
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('hidden');
+    });
+
+    // Drag & Drop upload functionality
+    const uploadBox = document.getElementById("uploadBox");
+    const recentFiles = document.getElementById("recentFiles");
+
+    uploadBox.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      uploadBox.style.background = "#e6f0ff";
+    });
+
+    uploadBox.addEventListener("dragleave", () => {
+      uploadBox.style.background = "#f8f9ff";
+    });
+
+    uploadBox.addEventListener("drop", (e) => {
+      e.preventDefault();
+      uploadBox.style.background = "#f8f9ff";
+
+      let file = e.dataTransfer.files[0];
+      if (file) {
+        let today = new Date();
+        let date = today.toLocaleDateString("en-GB");
+        
+        // Add to recent files list
+        let newFile = document.createElement("div");
+        newFile.classList.add("file-item");
+        newFile.innerHTML = `<span>📄 ${file.name}</span><small>${date}</small>`;
+        recentFiles.prepend(newFile);
+
+        alert("File uploaded: " + file.name);
+      }
+    });
+  </script>
+</body>
+</html>
