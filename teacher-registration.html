@@ -6,6 +6,8 @@
   <title>Teacher Registration - NeuroGrade</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script type="module" src="/Neuro-Grade-Backend/services/teacher-services.js"></script>
+<script type="module" src="/Neuro-Grade-Backend/Teacher_register/FirebaseAuthTeacherRegister.js"></script>
   <style>
     * {
       margin: 0;
@@ -387,143 +389,17 @@
       <button class="modal-btn" id="modalOkBtn">Continue to Login</button>
     </div>
   </div>
+  <div class="modal" id="errorModal">
+  <div class="modal-content">
+    <div class="modal-icon" style="color:red;">
+      <i class="fas fa-times-circle"></i>
+    </div>
+    <h2>Error!</h2>
+    <p class="modal-message" id="errorMessage">Something went wrong.</p>
+    <button class="modal-btn" id="errorOkBtn">Try Again</button>
+  </div>
+</div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const subjectInput = document.getElementById('subject');
-      const addSubjectBtn = document.getElementById('addSubject');
-      const subjectList = document.getElementById('subjectList');
-      const noSubjects = document.getElementById('noSubjects');
-      const form = document.getElementById('registrationForm');
-      const successModal = document.getElementById('successModal');
-      const teacherIdNumber = document.getElementById('teacherIdNumber');
-      const modalOkBtn = document.getElementById('modalOkBtn');
-      
-      let subjects = [];
-      
-      // Function to generate a random teacher ID
-      function generateTeacherId() {
-        return Math.floor(10000 + Math.random() * 90000).toString();
-      }
-      
-      // Function to add a subject
-      function addSubject() {
-        const subjectName = subjectInput.value.trim();
-        
-        if (subjectName === '') {
-          alert('Please enter a subject name');
-          return;
-        }
-        
-        if (subjects.includes(subjectName)) {
-          alert('This subject has already been added');
-          return;
-        }
-        
-        subjects.push(subjectName);
-        updateSubjectList();
-        
-        // Clear the input
-        subjectInput.value = '';
-        subjectInput.focus();
-      }
-      
-      // Function to update the subject list UI
-      function updateSubjectList() {
-        if (subjects.length === 0) {
-          noSubjects.style.display = 'block';
-          return;
-        }
-        
-        noSubjects.style.display = 'none';
-        
-        // Clear the list first
-        subjectList.innerHTML = '';
-        
-        // Add each subject to the list
-        subjects.forEach((subject, index) => {
-          const subjectItem = document.createElement('div');
-          subjectItem.className = 'subject-item';
-          subjectItem.innerHTML = `
-            <span>${subject}</span>
-            <button type="button" class="remove-btn" data-index="${index}">
-              <i class="fas fa-times"></i>
-            </button>
-          `;
-          subjectList.appendChild(subjectItem);
-        });
-        
-        // Add event listeners to remove buttons
-        const removeButtons = document.querySelectorAll('.remove-btn');
-        removeButtons.forEach(button => {
-          button.addEventListener('click', function() {
-            const index = parseInt(this.getAttribute('data-index'));
-            subjects.splice(index, 1);
-            updateSubjectList();
-          });
-        });
-      }
-      
-      // Function to validate the form
-      function validateForm() {
-        const password = document.getElementById('password').value;
-        const confirmPassword = document.getElementById('confirmPassword').value;
-        const email = document.getElementById('email').value;
-        
-        if (password !== confirmPassword) {
-          alert('Passwords do not match');
-          return false;
-        }
-        
-        if (subjects.length === 0) {
-          alert('Please add at least one subject you teach');
-          return false;
-        }
-        
-        // Basic email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-          alert('Please enter a valid email address');
-          return false;
-        }
-        
-        return true;
-      }
-      
-      // Function to show success modal
-      function showSuccessModal(teacherId) {
-        teacherIdNumber.textContent = teacherId;
-        successModal.style.display = 'flex';
-      }
-      
-      // Event listeners
-      addSubjectBtn.addEventListener('click', addSubject);
-      
-      subjectInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          addSubject();
-        }
-      });
-      
-      form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        if (validateForm()) {
-          // Generate teacher ID
-          const teacherId = generateTeacherId();
-          
-          // Show success modal
-          showSuccessModal(teacherId);
-        }
-      });
-      
-      modalOkBtn.addEventListener('click', function() {
-        successModal.style.display = 'none';
-        // In a real application, you would redirect to login page
-        // window.location.href = 'login.html';
-      });
-    });
-  </script>
 </body>
+
 </html>
