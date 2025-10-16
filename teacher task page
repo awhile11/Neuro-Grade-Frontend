@@ -31,20 +31,20 @@
     }
 
     /* Sidebar */
-     .sidebar {
-  width: 200px;
-  height: 100vh;
-  background: #fff;
-  padding: 20px;
-  border-right: 1px solid #ddd;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; /* align items horizontally (left-align) */
-  justify-content: center; /* center contents vertically */
-  box-shadow: 2px 0 8px rgba(0,0,0,0.08);
-  border-radius: 0 12px 12px 0;
-  transition: all 0.3s ease;
-}
+    .sidebar {
+      width: 200px;
+      height: 100vh;
+      background: #fff;
+      padding: 20px;
+      border-right: 1px solid #ddd;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.08);
+      border-radius: 0 12px 12px 0;
+      transition: all 0.3s ease;
+    }
 
     .nav {
       display: flex;
@@ -413,6 +413,26 @@
       transform: scale(1.2);
     }
 
+    /* Reference materials section */
+    .reference-section {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+
+    .reference-section h3 {
+      font-size: 18px;
+      color: #8e44ad;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .reference-section h3 i {
+      color: #8e44ad;
+    }
+
     /* Menu toggle for mobile (hidden by default) */
     .menu-toggle {
       display: none;
@@ -596,18 +616,30 @@
         </div>
       </div>
 
-      <!-- Upload Tasks Section -->
+      <!-- Upload Tests Section -->
       <div class="upload-section">
         <div class="section-header">
-          <h2><i class="fas fa-tasks"></i> Upload Tasks</h2>
+          <h2><i class="fas fa-tasks"></i> Upload Tests</h2>
         </div>
-        <div class="upload-box" id="drop-zone">
+        <div class="upload-box" id="test-drop-zone">
           <i class="fas fa-cloud-upload-alt"></i>
-          <h3>Drag and drop your test/assignment here</h3>
+          <h3>Drag and drop your test here</h3>
           <p>or click to browse files</p>
-          <input type="file" id="file-input" style="display: none;">
+          <input type="file" id="test-file-input" style="display: none;">
         </div>
-        <button class="upload-btn" id="upload-button">UPLOAD</button>
+        <button class="upload-btn" id="test-upload-button">UPLOAD TEST</button>
+        
+        <!-- Reference materials for tests -->
+        <div class="reference-section">
+          <h3><i class="fas fa-book"></i> Reference Materials for AI Marking</h3>
+          <div class="upload-box" id="test-reference-drop-zone">
+            <i class="fas fa-file-upload"></i>
+            <h3>Upload rubric, study guide, or reference material</h3>
+            <p>AI will use this as reference when marking tests</p>
+            <input type="file" id="test-reference-file-input" style="display: none;">
+          </div>
+          <button class="upload-btn" id="test-reference-upload-button">UPLOAD REFERENCE</button>
+        </div>
       </div>
 
       <!-- Uploaded Assignments Section -->
@@ -665,8 +697,214 @@
           </div>
         </div>
       </div>
+
+      <!-- Upload Assignments Section -->
+      <div class="upload-section">
+        <div class="section-header">
+          <h2><i class="fas fa-tasks"></i> Upload Assignments</h2>
+        </div>
+        <div class="upload-box" id="assignment-drop-zone">
+          <i class="fas fa-cloud-upload-alt"></i>
+          <h3>Drag and drop your assignment here</h3>
+          <p>or click to browse files</p>
+          <input type="file" id="assignment-file-input" style="display: none;">
+        </div>
+        <button class="upload-btn" id="assignment-upload-button">UPLOAD ASSIGNMENT</button>
+        
+        <!-- Reference materials for assignments -->
+        <div class="reference-section">
+          <h3><i class="fas fa-book"></i> Reference Materials for AI Marking</h3>
+          <div class="upload-box" id="assignment-reference-drop-zone">
+            <i class="fas fa-file-upload"></i>
+            <h3>Upload rubric, study guide, or reference material</h3>
+            <p>AI will use this as reference when marking assignments</p>
+            <input type="file" id="assignment-reference-file-input" style="display: none;">
+          </div>
+          <button class="upload-btn" id="assignment-reference-upload-button">UPLOAD REFERENCE</button>
+        </div>
+      </div>
     </div>
   </div>
 
+  <script>
+    // Mobile menu toggle functionality
+    document.getElementById('menu-toggle').addEventListener('click', function() {
+      document.getElementById('sidebar').classList.toggle('active');
+    });
+
+    // Show page function (placeholder)
+    function showPage(page) {
+      console.log(`Navigating to ${page} page`);
+      // In a real implementation, this would load the appropriate page content
+    }
+
+    // File upload functionality for tests
+    const testDropZone = document.getElementById('test-drop-zone');
+    const testFileInput = document.getElementById('test-file-input');
+    const testUploadButton = document.getElementById('test-upload-button');
+
+    testDropZone.addEventListener('click', () => {
+      testFileInput.click();
+    });
+
+    testDropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      testDropZone.style.background = '#f0e6f5';
+    });
+
+    testDropZone.addEventListener('dragleave', () => {
+      testDropZone.style.background = '#f8f9fa';
+    });
+
+    testDropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      testDropZone.style.background = '#f8f9fa';
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        handleTestFileUpload(files[0]);
+      }
+    });
+
+    testFileInput.addEventListener('change', () => {
+      if (testFileInput.files.length > 0) {
+        handleTestFileUpload(testFileInput.files[0]);
+      }
+    });
+
+    testUploadButton.addEventListener('click', () => {
+      testFileInput.click();
+    });
+
+    function handleTestFileUpload(file) {
+      alert(`Test file "${file.name}" uploaded successfully!`);
+      // In a real implementation, this would send the file to the server
+    }
+
+    // File upload functionality for test reference materials
+    const testReferenceDropZone = document.getElementById('test-reference-drop-zone');
+    const testReferenceFileInput = document.getElementById('test-reference-file-input');
+    const testReferenceUploadButton = document.getElementById('test-reference-upload-button');
+
+    testReferenceDropZone.addEventListener('click', () => {
+      testReferenceFileInput.click();
+    });
+
+    testReferenceDropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      testReferenceDropZone.style.background = '#f0e6f5';
+    });
+
+    testReferenceDropZone.addEventListener('dragleave', () => {
+      testReferenceDropZone.style.background = '#f8f9fa';
+    });
+
+    testReferenceDropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      testReferenceDropZone.style.background = '#f8f9fa';
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        handleTestReferenceUpload(files[0]);
+      }
+    });
+
+    testReferenceFileInput.addEventListener('change', () => {
+      if (testReferenceFileInput.files.length > 0) {
+        handleTestReferenceUpload(testReferenceFileInput.files[0]);
+      }
+    });
+
+    testReferenceUploadButton.addEventListener('click', () => {
+      testReferenceFileInput.click();
+    });
+
+    function handleTestReferenceUpload(file) {
+      alert(`Test reference material "${file.name}" uploaded successfully! The AI will use this when marking tests.`);
+      // In a real implementation, this would send the file to the server
+    }
+
+    // File upload functionality for assignments
+    const assignmentDropZone = document.getElementById('assignment-drop-zone');
+    const assignmentFileInput = document.getElementById('assignment-file-input');
+    const assignmentUploadButton = document.getElementById('assignment-upload-button');
+
+    assignmentDropZone.addEventListener('click', () => {
+      assignmentFileInput.click();
+    });
+
+    assignmentDropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      assignmentDropZone.style.background = '#f0e6f5';
+    });
+
+    assignmentDropZone.addEventListener('dragleave', () => {
+      assignmentDropZone.style.background = '#f8f9fa';
+    });
+
+    assignmentDropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      assignmentDropZone.style.background = '#f8f9fa';
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        handleAssignmentFileUpload(files[0]);
+      }
+    });
+
+    assignmentFileInput.addEventListener('change', () => {
+      if (assignmentFileInput.files.length > 0) {
+        handleAssignmentFileUpload(assignmentFileInput.files[0]);
+      }
+    });
+
+    assignmentUploadButton.addEventListener('click', () => {
+      assignmentFileInput.click();
+    });
+
+    function handleAssignmentFileUpload(file) {
+      alert(`Assignment file "${file.name}" uploaded successfully!`);
+      // In a real implementation, this would send the file to the server
+    }
+
+    // File upload functionality for assignment reference materials
+    const assignmentReferenceDropZone = document.getElementById('assignment-reference-drop-zone');
+    const assignmentReferenceFileInput = document.getElementById('assignment-reference-file-input');
+    const assignmentReferenceUploadButton = document.getElementById('assignment-reference-upload-button');
+
+    assignmentReferenceDropZone.addEventListener('click', () => {
+      assignmentReferenceFileInput.click();
+    });
+
+    assignmentReferenceDropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      assignmentReferenceDropZone.style.background = '#f0e6f5';
+    });
+
+    assignmentReferenceDropZone.addEventListener('dragleave', () => {
+      assignmentReferenceDropZone.style.background = '#f8f9fa';
+    });
+
+    assignmentReferenceDropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      assignmentReferenceDropZone.style.background = '#f8f9fa';
+      const files = e.dataTransfer.files;
+      if (files.length > 0) {
+        handleAssignmentReferenceUpload(files[0]);
+      }
+    });
+
+    assignmentReferenceFileInput.addEventListener('change', () => {
+      if (assignmentReferenceFileInput.files.length > 0) {
+        handleAssignmentReferenceUpload(assignmentReferenceFileInput.files[0]);
+      }
+    });
+
+    assignmentReferenceUploadButton.addEventListener('click', () => {
+      assignmentReferenceFileInput.click();
+    });
+
+    function handleAssignmentReferenceUpload(file) {
+      alert(`Assignment reference material "${file.name}" uploaded successfully! The AI will use this when marking assignments.`);
+      // In a real implementation, this would send the file to the server
+    }
+  </script>
 </body>
 </html>
