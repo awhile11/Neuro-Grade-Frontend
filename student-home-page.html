@@ -34,18 +34,19 @@
 
     /* Sidebar */
     .sidebar {
-      width: 200px;
-      background: #fff;
-      padding: 20px;
-      border-right: 1px solid #ddd;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      box-shadow: 2px 0 8px rgba(0,0,0,0.08);
-      margin-top: 180px;/*350px*/
-      border-radius: 0 12px 12px 0;
-      transition: all 0.3s ease;
-    }
+  width: 200px;
+  height: 100vh;
+  background: #fff;
+  padding: 20px;
+  border-right: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* align items horizontally (left-align) */
+  justify-content: center; /* center contents vertically */
+  box-shadow: 2px 0 8px rgba(0,0,0,0.08);
+  border-radius: 0 12px 12px 0;
+  transition: all 0.3s ease;
+}
 
     .nav {
       display: flex;
@@ -127,7 +128,7 @@
       display: flex;
       flex-direction: column;
       overflow-y: auto;
-      margin-top: 0px;
+      margin-top: 70px;
       background: #f8f9fa;
       transition: all 0.3s ease;
     }
@@ -628,7 +629,7 @@
 </head>
 <body>
   <!-- Top left logo -->
-  <img src="neurograde_logo.jpg" alt="NeuroGrade Logo" class="top-left-logo">
+  <img src="neuro grade logo.jpg" alt="NeuroGrade Logo" class="top-left-logo">
 
   <!-- Mobile menu toggle -->
   <button class="menu-toggle" id="menu-toggle">
@@ -679,7 +680,7 @@
           <p class="average" id="student-average">73.4%</p>
           <p class="change"><i class="fas fa-arrow-up"></i> increased by 2.1% from last week</p>
         </div>
-<!-- Subject card-->
+
         <div class="subjects-card">
           <div class="subjects-header">
             <h2>Your Subjects</h2>
@@ -895,3 +896,5 @@
   </script>
 </body>
 </html>
+
+

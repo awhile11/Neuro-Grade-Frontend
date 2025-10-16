@@ -6,7 +6,8 @@
   <title>Student Registration - NeuroGrade</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <script type="module" src="/Neuro-Grade-Backend/Student_Register/SResister.js"></script>
+  <script type="module" src="/Backend/Neuro-Grade-Backend/services/teacher-services.js"></script>
+  <script type="module" src="/Backend/Neuro-Grade-Backend/Student_Register/FirebaseRegistration.js"></script>
   <style>
     * {
       margin: 0;
@@ -393,6 +394,19 @@
       <div class="student-number" id="generatedStudentNumber"></div>
       <p class="modal-message">Please check your inbox and use this student number to log in to your account.</p>
       <button class="modal-btn" id="modalOkBtn">OK</button>
+    </div>
+  </div>
+
+  <!--ErrorModal  -->
+      <div class="modal" id="errorModal">
+        
+    <div class="modal-content">
+      <div class="modal-icon" style="color:red;">
+        <i class="fas fa-times-circle"></i>
+      </div>
+      <h2>Error!</h2>
+      <p class="modal-message" id="errorMessage">Something went wrong.</p>
+      <button class="modal-btn" id="errorOkBtn">Try Again</button>
     </div>
   </div>
 
