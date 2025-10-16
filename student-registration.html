@@ -6,7 +6,8 @@
   <title>Student Registration - NeuroGrade</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <script type="module" src="/Neuro-Grade-Backend/Student_Register/SResister.js"></script>
+  <script type="module" src="/Neuro-Grade-Backend/Student_Register/FirebaseAuthStudentRegister.js"></script>
+  <script type="module" src="/Neuro-Grade-Backend/services/student-services.js"></script>
   <style>
     * {
       margin: 0;
@@ -347,13 +348,23 @@
         </div>
         
         <!-- Teacher and Subjects Section -->
-        <div class="form-section">
+
+        <!-- <div class="form-section">
           <h2>Teacher & Subjects Information</h2>
           <div class="input-box">
             <label for="teacher">Teacher's Name</label>
             <input type="text" id="teacher" placeholder="Enter your teacher's full name" required>
             <i class="fas fa-chalkboard-teacher"></i>
-          </div>
+          </div> -->
+         
+         <!-- teacher dropdown ------------->
+          <div class="input-box">
+          <label for="teacher">Teacher's Name</label>
+          <select id="teacher" required>
+            <option value="">Select Teacher</option>  <!-- Default option -->
+          </select>
+          <i class="fas fa-chalkboard-teacher"></i>
+        </div>
           
           <h3 style="margin: 20px 0 15px; color: #555;">Subjects</h3>
           
@@ -376,7 +387,7 @@
         <button type="submit" class="submit-btn">Create Account</button>
         
         <div class="login-link">
-          Already have an account? <a href="#">Log in here</a>
+          Already have an account? <a href="login.html">Log in here</a>
         </div>
       </form>
     </div>
@@ -395,159 +406,18 @@
       <button class="modal-btn" id="modalOkBtn">OK</button>
     </div>
   </div>
+  <!--Error Model-->
+<div class="modal" id="errorModal">
+  <div class="modal-content">
+    <div class="modal-icon" style="color:red;">
+      <i class="fas fa-times-circle"></i>
+    </div>
+    <h2>Oops!</h2>
+    <p class="modal-message" id="errorMessage">Something went wrong.</p>
+    <button class="modal-btn" id="errorOkBtn">Try Again</button>
+  </div>
+</div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const subjectInput = document.getElementById('subject');
-      const addSubjectBtn = document.getElementById('addSubject');
-      const subjectList = document.getElementById('subjectList');
-      const noSubjects = document.getElementById('noSubjects');
-      const form = document.getElementById('registrationForm');
-      const successModal = document.getElementById('successModal');
-      const generatedStudentNumber = document.getElementById('generatedStudentNumber');
-      const modalOkBtn = document.getElementById('modalOkBtn');
-      
-      let subjects = [];
-      
-      // Function to generate a random 9-digit student number
-      function generateStudentNumber() {
-        return Math.floor(100000000 + Math.random() * 900000000).toString();
-      }
-      
-      // Function to add a subject
-      function addSubject() {
-        const subjectName = subjectInput.value.trim();
-        
-        if (subjectName === '') {
-          alert('Please enter a subject name');
-          return;
-        }
-        
-        if (subjects.includes(subjectName)) {
-          alert('This subject has already been added');
-          return;
-        }
-        
-        subjects.push(subjectName);
-        updateSubjectList();
-        
-        // Clear the input
-        subjectInput.value = '';
-        subjectInput.focus();
-      }
-      
-      // Function to update the subject list UI
-      function updateSubjectList() {
-        if (subjects.length === 0) {
-          noSubjects.style.display = 'block';
-          return;
-        }
-        
-        noSubjects.style.display = 'none';
-        
-        // Clear the list first
-        subjectList.innerHTML = '';
-        
-        // Add each subject to the list
-        subjects.forEach((subject, index) => {
-          const subjectItem = document.createElement('div');
-          subjectItem.className = 'subject-item';
-          subjectItem.innerHTML = `
-            <span>${subject}</span>
-            <button type="button" class="remove-btn" data-index="${index}">
-              <i class="fas fa-times"></i>
-            </button>
-          `;
-          subjectList.appendChild(subjectItem);
-        });
-        
-        // Add event listeners to remove buttons
-        const removeButtons = document.querySelectorAll('.remove-btn');
-        removeButtons.forEach(button => {
-          button.addEventListener('click', function() {
-            const index = parseInt(this.getAttribute('data-index'));
-            subjects.splice(index, 1);
-            updateSubjectList();
-          });
-        });
-      }
-      
-      // Function to validate the form
-      function validateForm() {
-        const password = document.getElementById('password').value;
-        const confirmPassword = document.getElementById('confirmPassword').value;
-        const email = document.getElementById('email').value;
-        
-        if (password !== confirmPassword) {
-          alert('Passwords do not match');
-          return false;
-        }
-        
-        if (subjects.length === 0) {
-          alert('Please add at least one subject');
-          return false;
-        }
-        
-        // Basic email validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-          alert('Please enter a valid email address');
-          return false;
-        }
-        
-        return true;
-      }
-      
-      // Function to show success modal
-      function showSuccessModal(studentNumber) {
-        generatedStudentNumber.textContent = studentNumber;
-        successModal.style.display = 'flex';
-      }
-      
-      // Event listeners
-      addSubjectBtn.addEventListener('click', addSubject);
-      
-      subjectInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-          e.preventDefault();
-          addSubject();
-        }
-      });
-      
-      form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        if (validateForm()) {
-          // Generate student number
-          const studentNumber = generateStudentNumber();
-          
-          // Get user email
-          const userEmail = document.getElementById('email').value;
-          
-          // In a real application, you would send the student number to the user's email
-          // For this demo, we'll just show a modal with the generated number
-          showSuccessModal(studentNumber);
-          
-          // Simulate sending email (commented out for demo)
-          /*
-          sendEmail(userEmail, studentNumber)
-            .then(() => {
-              showSuccessModal(studentNumber);
-            })
-            .catch(error => {
-              alert('There was an error sending the email. Please try again.');
-              console.error('Email error:', error);
-            });
-          */
-        }
-      });
-      
-      modalOkBtn.addEventListener('click', function() {
-        successModal.style.display = 'none';
-        // In a real application, you might redirect to login page here
-        // window.location.href = 'login.html';
-      });
-    });
-  </script>
+  
 </body>
 </html>
