@@ -5,9 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NeuroGrade - AI Test Generation</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script type="module" src="../Neuro-Grade-Backend/services/teacher-task-service.js"></script><!--For registration validation-->
- 
-  <style>
+   <style>
     * {
       box-sizing: border-box;
       margin: 0;
@@ -34,20 +32,19 @@
     }
 
     /* Sidebar */
-     .sidebar {
-  width: 200px;
-  height: 100vh;
-  background: #fff;
-  padding: 20px;
-  border-right: 1px solid #ddd;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; /* align items horizontally (left-align) */
-  justify-content: center; /* center contents vertically */
-  box-shadow: 2px 0 8px rgba(0,0,0,0.08);
-  border-radius: 0 12px 12px 0;
-  transition: all 0.3s ease;
-}
+    .sidebar {
+      width: 200px;
+      background: #fff;
+      padding: 20px;
+      border-right: 1px solid #ddd;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.08);
+      margin-top: 350px;
+      border-radius: 0 12px 12px 0;
+      transition: all 0.3s ease;
+    }
 
     .nav {
       display: flex;
@@ -266,7 +263,22 @@
       transition: all 0.3s;
       background: #f8f9fa;
       margin-bottom: 10px;
+    
     }
+    /* .test-search button {
+      margin-top: 10px;
+      width: 100%;
+      padding: 10px;
+      background: #8e44ad;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    } */
     
     .test-search input:focus {
       outline: none;
@@ -916,7 +928,7 @@
 <body>
 
   <!-- Top left logo -->
-  <img src="neuro grade logo.jpg" alt="NeuroGrade Logo" class="top-left-logo">
+  <img src="../Neuro-Grade-Frontend/neurograde_logo.jpg" alt="NeuroGrade Logo" class="top-left-logo">
 
   <!-- Mobile menu toggle -->
   <button class="menu-toggle" id="menu-toggle">
@@ -926,11 +938,16 @@
   <!-- Sidebar -->
   <div class="sidebar" id="sidebar">
     <div class="nav">
-      <button onclick="showPage('home')"><i class="fas fa-home"></i> Home</button>
-      <button onclick="showPage('task')"><i class="fas fa-tasks"></i> Task</button>
-      <button onclick="showPage('students')"><i class="fas fa-users"></i> Students</button>
-      <button class="active" onclick="showPage('practice')"><i class="fas fa-graduation-cap"></i> Practice</button>
-      <button onclick="showPage('feedback')"><i class="fas fa-comment-dots"></i> Feedback</button>
+      <button ><i class="fas fa-home"></i> Home</button>
+      <button ><i class="fas fa-tasks"></i> Task</button>
+      <button ><i class="fas fa-users"></i> Students</button>
+      <button  class="active"><i class="fas fa-graduation-cap"></i> Practice</button>
+      <button ><i class="fas fa-comment-dots"></i> Feedback</button>
+      <!-- onclick="showPage('home')"
+onclick="showPage('task')"
+onclick="showPage('students')"
+onclick="showPage('practice')"
+onclick="showPage('feedback')" -->
     </div>
   </div>
 
@@ -956,8 +973,10 @@
       <div class="test-list">
         <div class="test-search">
           <input type="text" placeholder="Search tests..." id="testSearch">
+          <button id="searchBtn">Search</button>
+         
         </div>
-        <div class="tests">
+        <div id = "tests" class="tests">
           <div class="test-item active">
             <div class="test-info">
               <h4>New Test</h4>
@@ -1003,7 +1022,7 @@
         <div class="question-section">
           <div class="question-header">
             <h2>Questions</h2>
-            <button class="add-question-btn" id="add-question-btn">
+            <button  type="button" class="add-question-btn" id="add-question-btn">
               <i class="fas fa-plus"></i> Add Question
             </button>
           </div>
@@ -1030,12 +1049,13 @@
         </div>
 
         <div class="button-group">
-          <button class="ai-test-btn" id="ai-test-btn">
+          <button type = "button" class="ai-test-btn" id="ai-test-btn">
             <i class="fas fa-robot"></i> AI GENERATE TEST
           </button>
-          <button class="save-test-btn" id="save-test-btn">
+          <button  type="button" class="save-test-btn" id="save-test-btn">
             SAVE TEST
           </button>
+          <button id="test-firebase-btn">Test Firebase Save</button><!--Testing button-->
         </div>
       </div>
     </div>
@@ -1115,14 +1135,12 @@
           </div>
         </div>
         
-        <button class="generate-btn" id="generate-test-btn">
+        <button type = "button" class="generate-btn" id="generate-test-btn">
           GENERATE TEST
         </button>
       </div>
     </div>
   </div>
-
- 
-
 </body>
+<script type="module" src="../Neuro-Grade-Backend/services/teacher-services/teacher-task-service.js"></script>
 </html>
