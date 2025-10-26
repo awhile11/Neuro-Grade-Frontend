@@ -32,19 +32,19 @@
   }
 
   /* Sidebar */
-  .sidebar {
-    width: 200px;
-    height: 100vh;
-    background: #fff;
-    padding: 20px;
-    border-right: 1px solid #ddd;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    box-shadow: 2px 0 8px rgba(0,0,0,0.08);
-    border-radius: 0 12px 12px 0;
-    transition: all 0.3s ease;
+    .sidebar {
+      width: 200px;
+      height: 100vh;
+      background: #fff;
+      padding: 20px;
+      border-right: 1px solid #ddd;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      box-shadow: 2px 0 8px rgba(0,0,0,0.08);
+      border-radius: 0 12px 12px 0;
+      transition: all 0.3s ease;
   }
 
   .nav {
@@ -119,6 +119,62 @@
   .nav button.active i {
     transform: scale(1.2);
     color: #fff;
+  }
+
+  /* Logout button styles - MOVED TO BE UNDER FEEDBACK BUTTON */
+  .logout-container {
+    margin-top: auto;
+    width: 100%;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+  }
+  
+  .logout-btn {
+    background: none;
+    border: 1px solid rgba(0,0,0,0.08);
+    font-size: 16px;
+    padding: 12px 15px;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    color: #333;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .logout-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 107, 107, 0.1), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .logout-btn:hover::before {
+    left: 100%;
+  }
+
+  .logout-btn:hover {
+    background: #ffe9e9;
+    color: #ff6b6b;
+    border-color: #ff6b6b;
+    transform: translateX(3px);
+  }
+
+  .logout-btn i {
+    transition: transform 0.3s ease;
+  }
+
+  .logout-btn:hover i {
+    transform: scale(1.2);
   }
 
   /* Main content */
@@ -1084,7 +1140,7 @@
     color: #8e44ad;
   }
   
-  /* Loading indicator - FIXED */
+  /* Loading indicator - IMPROVED */
   .loading {
     text-align: center;
     padding: 40px 20px;
@@ -1108,7 +1164,7 @@
   .loading i {
     font-size: 32px;
     margin-bottom: 15px;
-    animation: spin 1.5s linear infinite;
+    animation: pulse 1.5s infinite;
     transition: all 0.3s ease;
   }
 
@@ -1117,9 +1173,42 @@
     transform: scale(1.2);
   }
 
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+  .loading p {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #666;
+  }
+
+  /* New loading animation */
+  .loading-dots {
+    display: inline-flex;
+    gap: 5px;
+    margin-top: 15px;
+  }
+
+  .loading-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #8e44ad;
+    animation: bounce 1.4s infinite ease-in-out both;
+  }
+
+  .loading-dot:nth-child(1) {
+    animation-delay: -0.32s;
+  }
+
+  .loading-dot:nth-child(2) {
+    animation-delay: -0.16s;
+  }
+
+  @keyframes bounce {
+    0%, 80%, 100% {
+      transform: scale(0);
+    }
+    40% {
+      transform: scale(1);
+    }
   }
 
   /* Practice page layout */
@@ -2606,6 +2695,13 @@
       <a href="#"><button data-page="students"><i class="fas fa-users"></i> Students</button></a>
       <a href="#"><button data-page="practice"><i class="fas fa-graduation-cap"></i> Practice</button></a>
       <a href="#"><button data-page="feedback"><i class="fas fa-comment-dots"></i> Feedback</button></a>
+      
+      <!-- Logout button - MOVED TO BE UNDER FEEDBACK BUTTON -->
+      <div class="logout-container">
+        <button class="logout-btn" id="logout-btn">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+      </div>
     </div>
   </div>
 
@@ -2861,8 +2957,13 @@
           <div class="students-small" id="studentList">
             <!-- Student list will be populated from database -->
             <div class="loading">
-              <i class="fas fa-spinner"></i>
+              <i class="fas fa-spinner fa-pulse"></i>
               <p>Loading students from database...</p>
+              <div class="loading-dots">
+                <div class="loading-dot"></div>
+                <div class="loading-dot"></div>
+                <div class="loading-dot"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -2878,15 +2979,25 @@
           <!-- Tab content -->
           <div id="assignments" class="tab-content" style="display:none;">
             <div class="loading">
-              <i class="fas fa-spinner"></i>
+              <i class="fas fa-spinner fa-pulse"></i>
               <p>Select a student to view assignments</p>
+              <div class="loading-dots">
+                <div class="loading-dot"></div>
+                <div class="loading-dot"></div>
+                <div class="loading-dot"></div>
+              </div>
             </div>
           </div>
 
           <div id="tests" class="tab-content" style="display:none;">
             <div class="loading">
-              <i class="fas fa-spinner"></i>
+              <i class="fas fa-spinner fa-pulse"></i>
               <p>Select a student to view tests</p>
+              <div class="loading-dots">
+                <div class="loading-dot"></div>
+                <div class="loading-dot"></div>
+                <div class="loading-dot"></div>
+              </div>
             </div>
           </div>
 
@@ -3018,8 +3129,13 @@
           <div class="students">
             <!-- Student list will be populated from database -->
             <div class="loading">
-              <i class="fas fa-spinner"></i>
+              <i class="fas fa-spinner fa-pulse"></i>
               <p>Loading students from database...</p>
+              <div class="loading-dots">
+                <div class="loading-dot"></div>
+                <div class="loading-dot"></div>
+                <div class="loading-dot"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -3040,8 +3156,13 @@
               <div class="task-list">
                 <!-- Task list will be populated from database -->
                 <div class="loading">
-                  <i class="fas fa-spinner"></i>
+                  <i class="fas fa-spinner fa-pulse"></i>
                   <p>Select a student to view tasks</p>
+                  <div class="loading-dots">
+                    <div class="loading-dot"></div>
+                    <div class="loading-dot"></div>
+                    <div class="loading-dot"></div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -3051,8 +3172,13 @@
               <div class="autograder-results">
                 <!-- Autograder results will be populated from database -->
                 <div class="loading">
-                  <i class="fas fa-spinner"></i>
+                  <i class="fas fa-spinner fa-pulse"></i>
                   <p>Select a task to view results</p>
+                  <div class="loading-dots">
+                    <div class="loading-dot"></div>
+                    <div class="loading-dot"></div>
+                    <div class="loading-dot"></div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -3609,6 +3735,29 @@
     }
   });
 
+  // Logout functionality
+  document.getElementById('logout-btn').addEventListener('click', function() {
+    // Show confirmation dialog
+    if (confirm('Are you sure you want to logout?')) {
+      // Show loading state
+      this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Logging out...';
+      this.disabled = true;
+      
+      // Simulate logout process
+      setTimeout(() => {
+        // In a real application, you would:
+        // 1. Clear any authentication tokens
+        // 2. Redirect to login page
+        // 3. Clear any session data
+        
+        alert('You have been logged out successfully.');
+        
+        // Redirect to login page (replace with your actual login page URL)
+        window.location.href = 'login.html';
+      }, 1500);
+    }
+  });
+
   // Chart instances
   let assignmentsChart, testsChart, overallGradeChart;
 
@@ -3760,8 +3909,13 @@
     // Show loading state
     contentDiv.innerHTML = `
       <div class="loading">
-        <i class="fas fa-spinner"></i>
+        <i class="fas fa-spinner fa-pulse"></i>
         <p>Loading test data from database...</p>
+        <div class="loading-dots">
+          <div class="loading-dot"></div>
+          <div class="loading-dot"></div>
+          <div class="loading-dot"></div>
+        </div>
       </div>
     `;
     
@@ -3847,8 +4001,13 @@
     
     contentDiv.innerHTML = `
       <div class="loading">
-        <i class="fas fa-spinner"></i>
+        <i class="fas fa-spinner fa-pulse"></i>
         <p>Loading ${tabName} data from database...</p>
+        <div class="loading-dots">
+          <div class="loading-dot"></div>
+          <div class="loading-dot"></div>
+          <div class="loading-dot"></div>
+        </div>
       </div>
     `;
     
@@ -3889,8 +4048,13 @@
     const studentList = document.getElementById("studentList");
     studentList.innerHTML = `
       <div class="loading">
-        <i class="fas fa-spinner"></i>
+        <i class="fas fa-spinner fa-pulse"></i>
         <p>Loading students from database...</p>
+        <div class="loading-dots">
+          <div class="loading-dot"></div>
+          <div class="loading-dot"></div>
+          <div class="loading-dot"></div>
+        </div>
       </div>
     `;
     
@@ -3939,8 +4103,13 @@
     const studentList = document.querySelector("#feedback-page .students");
     studentList.innerHTML = `
       <div class="loading">
-        <i class="fas fa-spinner"></i>
+        <i class="fas fa-spinner fa-pulse"></i>
         <p>Loading students from database...</p>
+        <div class="loading-dots">
+          <div class="loading-dot"></div>
+          <div class="loading-dot"></div>
+          <div class="loading-dot"></div>
+        </div>
       </div>
     `;
     
@@ -4006,15 +4175,25 @@
     // Show loading state
     taskList.innerHTML = `
       <div class="loading">
-        <i class="fas fa-spinner"></i>
+        <i class="fas fa-spinner fa-pulse"></i>
         <p>Loading tasks from database...</p>
+        <div class="loading-dots">
+          <div class="loading-dot"></div>
+          <div class="loading-dot"></div>
+          <div class="loading-dot"></div>
+        </div>
       </div>
     `;
     
     autograderResults.innerHTML = `
       <div class="loading">
-        <i class="fas fa-spinner"></i>
+        <i class="fas fa-spinner fa-pulse"></i>
         <p>Select a task to view results</p>
+        <div class="loading-dots">
+          <div class="loading-dot"></div>
+          <div class="loading-dot"></div>
+          <div class="loading-dot"></div>
+        </div>
       </div>
     `;
     
@@ -4077,8 +4256,13 @@
     // Show loading state
     autograderResults.innerHTML = `
       <div class="loading">
-        <i class="fas fa-spinner"></i>
+        <i class="fas fa-spinner fa-pulse"></i>
         <p>Loading autograder results from database...</p>
+        <div class="loading-dots">
+          <div class="loading-dot"></div>
+          <div class="loading-dot"></div>
+          <div class="loading-dot"></div>
+        </div>
       </div>
     `;
     
