@@ -549,7 +549,7 @@
       margin-top: 30px;
     }
 
-    .save-test-btn {
+    .searchBtn,.save-test-btn {
       padding: 12px 25px;
       background: #8e44ad;
       color: white;
@@ -563,7 +563,7 @@
       overflow: hidden;
     }
 
-    .save-test-btn::before {
+    .searchBtn,.save-test-btn::before {
       content: '';
       position: absolute;
       top: 0;
@@ -574,11 +574,11 @@
       transition: left 0.5s ease;
     }
 
-    .save-test-btn:hover::before {
+    .searchBtn,.save-test-btn:hover::before {
       left: 100%;
     }
 
-    .save-test-btn:hover {
+    .searchBtn,.save-test-btn:hover {
       background: #6c3483;
       transform: translateY(-2px);
       box-shadow: 0 4px 8px rgba(108, 52, 131, 0.3);
@@ -973,38 +973,28 @@ onclick="showPage('feedback')" -->
       <div class="test-list">
         <div class="test-search">
           <input type="text" placeholder="Search tests..." id="testSearch">
-          <button id="searchBtn">Search</button>
+          <button class =" " id="searchBtn">Search</button>
          
         </div>
         <div id = "tests" class="tests">
           <div class="test-item active">
             <div class="test-info">
-              <h4>New Test</h4>
+              <h4>Loading test...</h4>
               <small>Currently editing</small>
             </div>
           </div>
+        
+         
           <div class="test-item">
             <div class="test-info">
-              <h4>Midterm Exam</h4>
-              <small>Created: Oct 15, 2023</small>
-            </div>
-          </div>
-          <div class="test-item">
-            <div class="test-info">
-              <h4>Quiz 1</h4>
-              <small>Created: Sep 28, 2023</small>
-            </div>
-          </div>
-          <div class="test-item">
-            <div class="test-info">
-              <h4>Final Exam</h4>
-              <small>Created: Nov 5, 2023</small>
+              <h4>Loading test...</h4>
+              <small>Loading date...</small>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="test-creation">
+      <div id = "test-creation" class="test-creation">
         <div class="test-header">
           <h1>TEST CREATION</h1>
         </div>
@@ -1055,7 +1045,7 @@ onclick="showPage('feedback')" -->
           <button  type="button" class="save-test-btn" id="save-test-btn">
             SAVE TEST
           </button>
-          <button id="test-firebase-btn">Test Firebase Save</button><!--Testing button-->
+          
         </div>
       </div>
     </div>
@@ -1142,5 +1132,5 @@ onclick="showPage('feedback')" -->
     </div>
   </div>
 </body>
-<script type="module" src="../Neuro-Grade-Backend/services/teacher-services/teacher-task-service.js"></script>
+<script type="module" src="../Neuro-Grade-Backend/services/teacher-task-service.js"></script>
 </html>
