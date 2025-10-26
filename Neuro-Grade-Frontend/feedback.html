@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NeuroGrade - Feedback</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fa;
+      color: #333;
+    }
+
+    /* Dashboard layout */
+    .dashboard {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 240px;
+      background: linear-gradient(180deg, #ffffff, #f8faff);
+      color: #333;
+      padding: 20px;
+      border-right: 1px solid #ddd;
+      border-top-right-radius: 20px;
+      border-bottom-right-radius: 20px;
+      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      transition: width 0.3s ease, transform 0.3s ease;
+    }
+
+    .sidebar.closed {
+      width: 0;
+      padding: 0;
+      overflow: hidden;
+      transform: translateX(-100%);
+    }
+
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 24px;
+      font-weight: bold;
+      letter-spacing: 1px;
+      color: #1e90ff;
+    }
+
+    .sidebar a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 15px;
+      color: #333;
+      text-decoration: none;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar a:hover {
+      background: #f0f4ff;
+      color: #1e90ff;
+      transform: translateX(5px);
+    }
+
+    .sidebar a.active {
+      background: #1e90ff;
+      color: #ffffff;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(30, 144, 255, 0.3);
+    }
+
+    /* Main content */
+    .main {
+      flex: 1;
+      padding: 30px;
+      transition: margin-left 0.3s ease;
+      width: 100%;
+    }
+
+    /* Top navbar inside main */
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .menu-btn {
+      font-size: 24px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      outline: none;
+      color: #333;
+      transition: color 0.3s ease;
+    }
+
+    .menu-btn:hover {
+      color: #1e90ff;
+    }
+
+    .topbar-icons {
+      display: flex;
+      align-items: center;
+    }
+
+    .topbar .icon {
+      font-size: 20px;
+      margin-left: 20px;
+      cursor: pointer;
+      color: #555;
+      transition: color 0.3s ease, transform 0.2s ease;
+    }
+
+    .topbar .icon:hover {
+      color: #1e90ff;
+      transform: scale(1.1);
+    }
+
+    /* Cards grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      color: #2c3e50;
+    }
+
+    .highlight {
+      font-size: 24px;
+      font-weight: bold;
+      color: #1e90ff;
+    }
+
+    /* Feedback highlights */
+    .feedback-list p {
+      margin: 8px 0;
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .feedback-list p:last-child {
+      border-bottom: none;
+    }
+
+    /* Chart placeholder */
+    .chart {
+      width: 100%;
+      height: 200px;
+      background: repeating-linear-gradient(
+        to right,
+        #e0e0e0,
+        #e0e0e0 1px,
+        transparent 1px,
+        transparent 50px
+      );
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #777;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+      
+      <img src="neurograde_logo.jpg" alt="NeuroGrade Logo">
+
+      <a href="#">🏠 Home</a>
+      <a href="#">📝 Tests</a>
+      <a href="#">📚 Assignments</a>
+      <a href="#">🧑‍💻 Practice</a>
+      <a href="#" class="active">💬 Feedback</a>
+    </div>
+
+    <!-- Main content -->
+    <div class="main">
+      <!-- Topbar -->
+      <div class="topbar">
+        <button class="menu-btn" id="menuBtn">☰</button>
+        <div class="topbar-icons">
+          <span class="icon">✉</span>
+          <span class="icon">🔔</span>
+          <span class="icon">👤</span>
+        </div>
+      </div>
+
+      <h1>Welcome Back, Bat-Man!</h1>
+      <p>Here is a quick overview of your academic progress</p>
+
+      <!-- Top cards -->
+      <div class="grid">
+        <div class="card">
+          <h3>Average Score</h3>
+          <p class="highlight">73.4%</p>
+          <p>📈 Increased by 2.1% last week</p>
+        </div>
+        <div class="card">
+          <h3>Recent Feedback</h3>
+          <p class="highlight">5 New</p>
+          <p>Last feedback received today</p>
+        </div>
+        <div class="card">
+          <h3>Upcoming Assignments</h3>
+          <p>📘 Math 511 — Due: 30 July</p>
+          <p>💻 Pro 741 — Due: 25 Aug</p>
+          <p>🤖 AI 700 — Due: 21 July</p>
+        </div>
+      </div>
+
+      <!-- Academic Overview -->
+      <div class="card">
+        <h3>Academic Overview</h3>
+        <div class="chart">[Performance Chart Placeholder]</div>
+      </div>
+
+      <!-- Feedback highlights -->
+      <div class="card">
+        <h3>Feedback Highlights</h3>
+        <div class="feedback-list">
+          <p><strong>HCI 653 CA Test 04-06:</strong> Focus more on the characteristics of good design</p>
+          <p><strong>PRO 741 CA Test 12-06:</strong> Remember to comment your code for better readability</p>
+          <p><strong>AI 700 Exam 03-07:</strong> Learn how to properly draw truth tables</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const sidebar = document.getElementById("sidebar");
+    const menuBtn = document.getElementById("menuBtn");
+
+    menuBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("closed");
+    });
+  </script>
+</body>
+</html>
