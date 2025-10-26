@@ -1840,6 +1840,167 @@
       100% { transform: rotate(360deg); }
     }
 
+    /* Message and Notification Popup Styles */
+    .popup-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      padding: 20px;
+    }
+    
+    .popup-container.active {
+      display: flex;
+      animation: fadeIn 0.3s ease;
+    }
+    
+    .message-popup {
+      background: white;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 500px;
+      max-height: 80vh;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .popup-header {
+      background: #3a86ff;
+      color: white;
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .popup-header h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+    
+    .close-popup {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      padding: 0;
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: background 0.3s;
+    }
+    
+    .close-popup:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+    
+    .popup-content {
+      padding: 20px;
+      overflow-y: auto;
+      flex: 1;
+    }
+    
+    .message-item, .notification-item {
+      padding: 15px;
+      border-bottom: 1px solid #eee;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    
+    .message-item:hover, .notification-item:hover {
+      background: #f8f9fa;
+    }
+    
+    .message-item:last-child, .notification-item:last-child {
+      border-bottom: none;
+    }
+    
+    .message-title, .notification-title {
+      font-weight: 600;
+      margin-bottom: 5px;
+      color: #333;
+    }
+    
+    .message-preview, .notification-preview {
+      color: #666;
+      font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .message-date, .notification-date {
+      color: #999;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: #888;
+    }
+    
+    .empty-state i {
+      font-size: 48px;
+      margin-bottom: 15px;
+      color: #ddd;
+    }
+    
+    .message-detail, .notification-detail {
+      display: none;
+    }
+    
+    .message-detail.active, .notification-detail.active {
+      display: block;
+    }
+    
+    .back-button {
+      background: none;
+      border: none;
+      color: #3a86ff;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+    
+    .message-subject, .notification-subject {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #333;
+    }
+    
+    .message-body, .notification-body {
+      line-height: 1.6;
+      color: #555;
+    }
+    
+    .message-meta, .notification-meta {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
+      font-size: 14px;
+      color: #888;
+    }
+
     /* Responsive design */
     @media (max-width: 1024px) {
       .dashboard-container {
@@ -1993,11 +2154,11 @@
       <div class="top-bar">
         <a href="#" class="icon-link" id="mail-icon">
           <i class="fas fa-envelope"></i>
-          <span class="icon-badge">0</span>
+          <span class="icon-badge" id="message-badge">0</span>
         </a>
         <a href="#" class="icon-link" id="notification-icon">
           <i class="fas fa-bell"></i>
-          <span class="icon-badge">0</span>
+          <span class="icon-badge" id="notification-badge">0</span>
         </a>
         <div class="top-user">
           <span><b>BAT-MAN</b><br><small>Bsc IT</small></span>
@@ -2129,6 +2290,32 @@
     </div>
   </div>
 
+  <!-- Message Popup -->
+  <div class="popup-container" id="message-popup">
+    <div class="message-popup">
+      <div class="popup-header">
+        <h2>Messages</h2>
+        <button class="close-popup" id="close-message-popup">&times;</button>
+      </div>
+      <div class="popup-content" id="message-content">
+        <!-- Messages will be loaded here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Popup -->
+  <div class="popup-container" id="notification-popup">
+    <div class="message-popup">
+      <div class="popup-header">
+        <h2>Notifications</h2>
+        <button class="close-popup" id="close-notification-popup">&times;</button>
+      </div>
+      <div class="popup-content" id="notification-content">
+        <!-- Notifications will be loaded here -->
+      </div>
+    </div>
+  </div>
+
   <!-- Assignments Page -->
   <div class="page-container" id="assignmentsPage">
     <!-- Integrity Confirmation Popup -->
@@ -2187,11 +2374,11 @@
       <div class="top-bar">
         <a href="#" class="icon-link" id="mail-icon-assignments">
           <i class="fas fa-envelope"></i>
-          <span class="icon-badge">0</span>
+          <span class="icon-badge" id="message-badge-assignments">0</span>
         </a>
         <a href="#" class="icon-link" id="notification-icon-assignments">
           <i class="fas fa-bell"></i>
-          <span class="icon-badge">0</span>
+          <span class="icon-badge" id="notification-badge-assignments">0</span>
         </a>
         <div class="top-user">
           <span><b>BAT-MAN</b><br><small>Bsc IT</small></span>
@@ -2384,11 +2571,11 @@
       <div class="top-bar">
         <a href="#" class="icon-link" id="mail-icon-tests">
           <i class="fas fa-envelope"></i>
-          <span class="icon-badge">0</span>
+          <span class="icon-badge" id="message-badge-tests">0</span>
         </a>
         <a href="#" class="icon-link" id="notification-icon-tests">
           <i class="fas fa-bell"></i>
-          <span class="icon-badge">0</span>
+          <span class="icon-badge" id="notification-badge-tests">0</span>
         </a>
         <div class="top-user">
           <span><b>BAT-MAN</b><br><small>Bsc IT</small></span>
@@ -2543,11 +2730,11 @@
       <div class="top-bar">
         <a href="#" class="icon-link" id="mail-icon-practice">
           <i class="fas fa-envelope"></i>
-          <span class="icon-badge">0</span>
+          <span class="icon-badge" id="message-badge-practice">0</span>
         </a>
         <a href="#" class="icon-link" id="notification-icon-practice">
           <i class="fas fa-bell"></i>
-          <span class="icon-badge">0</span>
+          <span class="icon-badge" id="notification-badge-practice">0</span>
         </a>
         <div class="top-user">
           <span><b>BAT-MAN</b><br><small>Bsc IT</small></span>
@@ -2606,11 +2793,11 @@
       <div class="top-bar">
         <a href="#" class="icon-link" id="mail-icon-feedback">
           <i class="fas fa-envelope"></i>
-          <span class="icon-badge">0</span>
+          <span class="icon-badge" id="message-badge-feedback">0</span>
         </a>
         <a href="#" class="icon-link" id="notification-icon-feedback">
           <i class="fas fa-bell"></i>
-          <span class="icon-badge">0</span>
+          <span class="icon-badge" id="notification-badge-feedback">0</span>
         </a>
         <div class="top-user">
           <span><b>BAT-MAN</b><br><small>Bsc IT</small></span>
@@ -2704,6 +2891,211 @@
   </div>
 
   <script>
+    // Message and Notification Data (Simulating database data)
+    const messagesData = [
+      {
+        id: 1,
+        subject: "Welcome to NeuroGrade",
+        sender: "Admin",
+        date: "2023-07-15",
+        body: "Welcome to NeuroGrade! We're excited to have you on board. This platform will help you track your academic progress and stay on top of your studies. If you have any questions, please don't hesitate to contact our support team."
+      },
+      {
+        id: 2,
+        subject: "New Assignment Posted",
+        sender: "Prof. Johnson",
+        date: "2023-07-18",
+        body: "A new assignment for Math 511 has been posted. Please check the assignments section for details. The due date is July 30th. Make sure to submit your work on time to avoid penalties."
+      },
+      {
+        id: 3,
+        subject: "Library Hours Update",
+        sender: "University Library",
+        date: "2023-07-20",
+        body: "Please note that the library will have extended hours during the exam period. From July 25th to August 15th, the library will be open until 11 PM on weekdays and 8 PM on weekends."
+      }
+    ];
+
+    const notificationsData = [
+      {
+        id: 1,
+        title: "Assignment Due Soon",
+        message: "Your Math 511 assignment is due in 3 days",
+        date: "2023-07-27",
+        type: "assignment"
+      },
+      {
+        id: 2,
+        title: "Grade Posted",
+        message: "Your grade for AI 700 exam has been posted",
+        date: "2023-07-25",
+        type: "grade"
+      },
+      {
+        id: 3,
+        title: "System Maintenance",
+        message: "NeuroGrade will be undergoing maintenance on Sunday from 2 AM to 4 AM",
+        date: "2023-07-23",
+        type: "system"
+      },
+      {
+        id: 4,
+        title: "New Practice Material",
+        message: "New practice questions have been added for PRO 741",
+        date: "2023-07-22",
+        type: "practice"
+      }
+    ];
+
+    // DOM Elements
+    const messagePopup = document.getElementById('message-popup');
+    const notificationPopup = document.getElementById('notification-popup');
+    const messageContent = document.getElementById('message-content');
+    const notificationContent = document.getElementById('notification-content');
+    const messageBadge = document.getElementById('message-badge');
+    const notificationBadge = document.getElementById('notification-badge');
+
+    // Initialize message and notification counts
+    function updateBadges() {
+      messageBadge.textContent = messagesData.length;
+      notificationBadge.textContent = notificationsData.length;
+      
+      // Update badges on all pages
+      document.querySelectorAll('#message-badge-assignments, #message-badge-tests, #message-badge-practice, #message-badge-feedback').forEach(badge => {
+        badge.textContent = messagesData.length;
+      });
+      
+      document.querySelectorAll('#notification-badge-assignments, #notification-badge-tests, #notification-badge-practice, #notification-badge-feedback').forEach(badge => {
+        badge.textContent = notificationsData.length;
+      });
+    }
+
+    // Load messages into the popup
+    function loadMessages() {
+      if (messagesData.length === 0) {
+        messageContent.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-envelope-open"></i>
+            <h3>No Messages</h3>
+            <p>You don't have any messages at the moment.</p>
+          </div>
+        `;
+        return;
+      }
+
+      let messagesHTML = '';
+      messagesData.forEach(message => {
+        messagesHTML += `
+          <div class="message-item" data-id="${message.id}">
+            <div class="message-title">${message.subject}</div>
+            <div class="message-preview">From: ${message.sender}</div>
+            <div class="message-date">${formatDate(message.date)}</div>
+          </div>
+        `;
+      });
+      
+      messageContent.innerHTML = messagesHTML;
+      
+      // Add click event to each message item
+      document.querySelectorAll('.message-item').forEach(item => {
+        item.addEventListener('click', function() {
+          const messageId = this.getAttribute('data-id');
+          showMessageDetail(messageId);
+        });
+      });
+    }
+
+    // Load notifications into the popup
+    function loadNotifications() {
+      if (notificationsData.length === 0) {
+        notificationContent.innerHTML = `
+          <div class="empty-state">
+            <i class="fas fa-bell-slash"></i>
+            <h3>No Notifications</h3>
+            <p>You don't have any notifications at the moment.</p>
+          </div>
+        `;
+        return;
+      }
+
+      let notificationsHTML = '';
+      notificationsData.forEach(notification => {
+        notificationsHTML += `
+          <div class="notification-item" data-id="${notification.id}">
+            <div class="notification-title">${notification.title}</div>
+            <div class="notification-preview">${notification.message}</div>
+            <div class="notification-date">${formatDate(notification.date)}</div>
+          </div>
+        `;
+      });
+      
+      notificationContent.innerHTML = notificationsHTML;
+      
+      // Add click event to each notification item
+      document.querySelectorAll('.notification-item').forEach(item => {
+        item.addEventListener('click', function() {
+          const notificationId = this.getAttribute('data-id');
+          showNotificationDetail(notificationId);
+        });
+      });
+    }
+
+    // Show message detail
+    function showMessageDetail(messageId) {
+      const message = messagesData.find(m => m.id == messageId);
+      if (!message) return;
+      
+      messageContent.innerHTML = `
+        <button class="back-button" id="back-to-messages">
+          <i class="fas fa-arrow-left"></i> Back to Messages
+        </button>
+        <div class="message-detail active">
+          <div class="message-subject">${message.subject}</div>
+          <div class="message-body">${message.body}</div>
+          <div class="message-meta">
+            <span>From: ${message.sender}</span>
+            <span>Date: ${formatDate(message.date)}</span>
+          </div>
+        </div>
+      `;
+      
+      // Add event listener to back button
+      document.getElementById('back-to-messages').addEventListener('click', function() {
+        loadMessages();
+      });
+    }
+
+    // Show notification detail
+    function showNotificationDetail(notificationId) {
+      const notification = notificationsData.find(n => n.id == notificationId);
+      if (!notification) return;
+      
+      notificationContent.innerHTML = `
+        <button class="back-button" id="back-to-notifications">
+          <i class="fas fa-arrow-left"></i> Back to Notifications
+        </button>
+        <div class="notification-detail active">
+          <div class="notification-subject">${notification.title}</div>
+          <div class="notification-body">${notification.message}</div>
+          <div class="notification-meta">
+            <span>Type: ${notification.type}</span>
+            <span>Date: ${formatDate(notification.date)}</span>
+          </div>
+        </div>
+      `;
+      
+      // Add event listener to back button
+      document.getElementById('back-to-notifications').addEventListener('click', function() {
+        loadNotifications();
+      });
+    }
+
+    // Format date for display
+    function formatDate(dateString) {
+      const options = { year: 'numeric', month: 'short', day: 'numeric' };
+      return new Date(dateString).toLocaleDateString(undefined, options);
+    }
+
     // Page Navigation
     const studentDashboard = document.getElementById('studentDashboard');
     const assignmentsPage = document.getElementById('assignmentsPage');
@@ -2876,8 +3268,54 @@
     
     // Initialize the dashboard with data
     document.addEventListener('DOMContentLoaded', () => {
-      // You can add initialization logic here
-      console.log('Student portal loaded');
+      // Initialize badges
+      updateBadges();
+      
+      // Load initial data
+      loadMessages();
+      loadNotifications();
+      
+      // Message icon click
+      document.querySelectorAll('#mail-icon, #mail-icon-assignments, #mail-icon-tests, #mail-icon-practice, #mail-icon-feedback').forEach(icon => {
+        icon.addEventListener('click', function(e) {
+          e.preventDefault();
+          messagePopup.classList.add('active');
+        });
+      });
+      
+      // Notification icon click
+      document.querySelectorAll('#notification-icon, #notification-icon-assignments, #notification-icon-tests, #notification-icon-practice, #notification-icon-feedback').forEach(icon => {
+        icon.addEventListener('click', function(e) {
+          e.preventDefault();
+          notificationPopup.classList.add('active');
+        });
+      });
+      
+      // Close message popup
+      document.getElementById('close-message-popup').addEventListener('click', function() {
+        messagePopup.classList.remove('active');
+        // Reset to message list when closing
+        loadMessages();
+      });
+      
+      // Close notification popup
+      document.getElementById('close-notification-popup').addEventListener('click', function() {
+        notificationPopup.classList.remove('active');
+        // Reset to notification list when closing
+        loadNotifications();
+      });
+      
+      // Close popups when clicking outside
+      window.addEventListener('click', function(e) {
+        if (e.target === messagePopup) {
+          messagePopup.classList.remove('active');
+          loadMessages();
+        }
+        if (e.target === notificationPopup) {
+          notificationPopup.classList.remove('active');
+          loadNotifications();
+        }
+      });
       
       // Add some sample notifications
       setTimeout(() => {
