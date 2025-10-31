@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -33,19 +32,20 @@
     }
 
     /* Sidebar */
-    .sidebar {
-      width: 200px;
-      background: #fff;
-      padding: 20px;
-      border-right: 1px solid #ddd;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.08);
-      margin-top: 350px;
-      border-radius: 0 12px 12px 0;
-      transition: all 0.3s ease;
-    }
+     .sidebar {
+  width: 200px;
+  height: 100vh;
+  background: #fff;
+  padding: 20px;
+  border-right: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* align items horizontally (left-align) */
+  justify-content: center; /* center contents vertically */
+  box-shadow: 2px 0 8px rgba(0,0,0,0.08);
+  border-radius: 0 12px 12px 0;
+  transition: all 0.3s ease;
+}
 
     .nav {
       display: flex;
@@ -61,7 +61,7 @@
 
     .nav button {
       background: none;
-      border: 1px solid rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(0,0,0,0.08);
       font-size: 16px;
       padding: 12px 15px;
       text-align: left;
@@ -98,7 +98,7 @@
       font-weight: bold;
       border-color: #6c3483;
       transform: translateX(5px);
-      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
     }
 
     .nav button:hover {
@@ -143,8 +143,8 @@
       padding: 15px;
       background: #fff;
       border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-      border: 1px solid rgba(0, 0, 0, 0.05);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      border: 1px solid rgba(0,0,0,0.05);
     }
 
     .icon-link {
@@ -190,17 +190,9 @@
     }
 
     @keyframes pulse {
-      0% {
-        transform: scale(1);
-      }
-
-      50% {
-        transform: scale(1.1);
-      }
-
-      100% {
-        transform: scale(1);
-      }
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
     }
 
     .top-user {
@@ -211,14 +203,14 @@
       padding: 8px 15px;
       background: #f8f9fa;
       border-radius: 20px;
-      border: 1px solid rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(0,0,0,0.08);
       transition: all 0.3s ease;
     }
 
     .top-user:hover {
       background: #f0e6f5;
       transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     }
 
     .top-user img {
@@ -249,18 +241,18 @@
       background: #fff;
       border-radius: 12px;
       padding: 20px;
-      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
       display: flex;
       flex-direction: column;
       gap: 10px;
-      border: 1px solid rgba(0, 0, 0, 0.08);
+      border: 1px solid rgba(0,0,0,0.08);
       overflow: hidden;
       transition: all 0.3s ease;
     }
 
     .test-list:hover {
       transform: translateY(-5px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
     }
 
     .test-search input {
@@ -272,31 +264,15 @@
       transition: all 0.3s;
       background: #f8f9fa;
       margin-bottom: 10px;
-
     }
-
-    /* .test-search button {
-      margin-top: 10px;
-      width: 100%;
-      padding: 10px;
-      background: #8e44ad;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 14px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    } */
-
+    
     .test-search input:focus {
       outline: none;
       border-color: #8e44ad;
       box-shadow: 0 0 8px rgba(142, 68, 173, 0.4);
       background: #fff;
     }
-
+    
     .test-search input::placeholder {
       color: #aaa;
     }
@@ -305,7 +281,7 @@
       flex: 1;
       overflow-y: auto;
       padding-right: 5px;
-      border: 1px solid rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0,0,0,0.05);
       border-radius: 8px;
       background: #f8f9fa;
       padding: 10px;
@@ -319,7 +295,7 @@
       background: #ddd;
       border-radius: 3px;
     }
-
+    
     .test-item {
       display: flex;
       align-items: center;
@@ -364,9 +340,9 @@
       font-weight: bold;
       border-color: #6c3483;
       transform: translateX(5px);
-      box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+      box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
     }
-
+    
     .test-item img {
       width: 40px;
       height: 40px;
@@ -380,15 +356,15 @@
       transform: scale(1.1);
       border-color: #8e44ad;
     }
-
+    
     .test-info {
       flex: 1;
     }
-
+    
     .test-info h4 {
       font-size: 15px;
     }
-
+    
     .test-info small {
       display: block;
       font-size: 12px;
@@ -405,8 +381,8 @@
       background: #fff;
       border-radius: 12px;
       padding: 30px;
-      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-      border: 1px solid rgba(0, 0, 0, 0.08);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+      border: 1px solid rgba(0,0,0,0.08);
       display: flex;
       flex-direction: column;
       transition: all 0.3s ease;
@@ -415,7 +391,7 @@
 
     .test-creation:hover {
       transform: translateY(-5px);
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
     }
 
     .test-header {
@@ -559,7 +535,6 @@
       margin-top: 30px;
     }
 
-    .searchBtn,
     .save-test-btn {
       padding: 12px 25px;
       background: #8e44ad;
@@ -574,7 +549,6 @@
       overflow: hidden;
     }
 
-    .searchBtn,
     .save-test-btn::before {
       content: '';
       position: absolute;
@@ -586,12 +560,10 @@
       transition: left 0.5s ease;
     }
 
-    .searchBtn,
     .save-test-btn:hover::before {
       left: 100%;
     }
 
-    .searchBtn,
     .save-test-btn:hover {
       background: #6c3483;
       transform: translateY(-2px);
@@ -600,8 +572,7 @@
 
     .ai-test-btn {
       padding: 12px 25px;
-      background: #9b59b6;
-      /* Changed from green to purple shade */
+      background: #9b59b6; /* Changed from green to purple shade */
       color: white;
       border: none;
       border-radius: 8px;
@@ -632,8 +603,7 @@
     }
 
     .ai-test-btn:hover {
-      background: #8e44ad;
-      /* Darker purple on hover */
+      background: #8e44ad; /* Darker purple on hover */
       transform: translateY(-2px);
       box-shadow: 0 4px 8px rgba(142, 68, 173, 0.3);
     }
@@ -833,48 +803,6 @@
       box-shadow: 0 4px 8px rgba(108, 52, 131, 0.3);
     }
 
-    /* Questions per type container */
-    #per-type-counts {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-      margin-top: 10px;
-    }
-
-    /* Each input wrapper */
-    .per-type-input {
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Label styling */
-    .per-type-input label {
-      font-weight: 600;
-      color: #555;
-      margin-bottom: 5px;
-      font-size: 15px;
-      display: block;
-    }
-
-    /* Input styling */
-    .per-type-input input[type="number"] {
-      width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid #ddd;
-      font-size: 15px;
-      background: #f8f9fa;
-      transition: all 0.3s ease;
-    }
-
-    /* Focus effect matching your modal style */
-    .per-type-input input[type="number"]:focus {
-      outline: none;
-      border-color: #8e44ad;
-      box-shadow: 0 0 8px rgba(142, 68, 173, 0.4);
-      background: #fff;
-    }
-
     /* Menu toggle for mobile (hidden by default) */
     .menu-toggle {
       display: none;
@@ -890,7 +818,7 @@
       font-size: 24px;
       cursor: pointer;
       z-index: 1001;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
       transition: all 0.3s ease;
     }
 
@@ -910,30 +838,30 @@
         border-radius: 0;
         transition: left 0.3s ease;
       }
-
+      
       .sidebar.active {
         left: 0;
       }
-
+      
       .main {
         margin-left: 0;
         margin-top: 20px;
       }
-
+      
       .menu-toggle {
         display: flex;
         align-items: center;
         justify-content: center;
       }
-
+      
       .practice-layout {
         flex-direction: column;
       }
-
+      
       .test-list {
         width: 100%;
       }
-
+      
       .top-left-logo {
         top: 10px;
         left: 10px;
@@ -954,20 +882,20 @@
         flex-wrap: wrap;
         justify-content: center;
       }
-
+      
       .top-user {
         order: -1;
         width: 100%;
         justify-content: center;
         margin-bottom: 10px;
       }
-
+      
       .question-header {
         flex-direction: column;
         gap: 15px;
         align-items: flex-start;
       }
-
+      
       .button-group {
         flex-direction: column;
       }
@@ -983,11 +911,10 @@
     }
   </style>
 </head>
-
 <body>
 
   <!-- Top left logo -->
-  <img src="../Neuro-Grade-Frontend/neurograde_logo.jpg" alt="NeuroGrade Logo" class="top-left-logo">
+  <img src="neuro grade logo.jpg" alt="NeuroGrade Logo" class="top-left-logo">
 
   <!-- Mobile menu toggle -->
   <button class="menu-toggle" id="menu-toggle">
@@ -997,16 +924,11 @@
   <!-- Sidebar -->
   <div class="sidebar" id="sidebar">
     <div class="nav">
-      <button><i class="fas fa-home"></i> Home</button>
-      <button><i class="fas fa-tasks"></i> Task</button>
-      <button><i class="fas fa-users"></i> Students</button>
-      <button class="active"><i class="fas fa-graduation-cap"></i> Practice</button>
-      <button><i class="fas fa-comment-dots"></i> Feedback</button>
-      <!-- onclick="showPage('home')"
-onclick="showPage('task')"
-onclick="showPage('students')"
-onclick="showPage('practice')"
-onclick="showPage('feedback')" -->
+      <button onclick="showPage('home')"><i class="fas fa-home"></i> Home</button>
+      <button onclick="showPage('task')"><i class="fas fa-tasks"></i> Task</button>
+      <button onclick="showPage('students')"><i class="fas fa-users"></i> Students</button>
+      <button class="active" onclick="showPage('practice')"><i class="fas fa-graduation-cap"></i> Practice</button>
+      <button onclick="showPage('feedback')"><i class="fas fa-comment-dots"></i> Feedback</button>
     </div>
   </div>
 
@@ -1032,28 +954,36 @@ onclick="showPage('feedback')" -->
       <div class="test-list">
         <div class="test-search">
           <input type="text" placeholder="Search tests..." id="testSearch">
-          <button class=" " id="searchBtn">Search</button>
-
         </div>
-        <div id="tests" class="tests">
+        <div class="tests">
           <div class="test-item active">
             <div class="test-info">
-              <h4>Loading test...</h4>
+              <h4>New Test</h4>
               <small>Currently editing</small>
             </div>
           </div>
-
-
           <div class="test-item">
             <div class="test-info">
-              <h4>Loading test...</h4>
-              <small>Loading date...</small>
+              <h4>Midterm Exam</h4>
+              <small>Created: Oct 15, 2023</small>
+            </div>
+          </div>
+          <div class="test-item">
+            <div class="test-info">
+              <h4>Quiz 1</h4>
+              <small>Created: Sep 28, 2023</small>
+            </div>
+          </div>
+          <div class="test-item">
+            <div class="test-info">
+              <h4>Final Exam</h4>
+              <small>Created: Nov 5, 2023</small>
             </div>
           </div>
         </div>
       </div>
 
-      <div id="test-creation" class="test-creation">
+      <div class="test-creation">
         <div class="test-header">
           <h1>TEST CREATION</h1>
         </div>
@@ -1071,7 +1001,7 @@ onclick="showPage('feedback')" -->
         <div class="question-section">
           <div class="question-header">
             <h2>Questions</h2>
-            <button type="button" class="add-question-btn" id="add-question-btn">
+            <button class="add-question-btn" id="add-question-btn">
               <i class="fas fa-plus"></i> Add Question
             </button>
           </div>
@@ -1098,13 +1028,12 @@ onclick="showPage('feedback')" -->
         </div>
 
         <div class="button-group">
-          <button type="button" class="ai-test-btn" id="ai-test-btn">
+          <button class="ai-test-btn" id="ai-test-btn">
             <i class="fas fa-robot"></i> AI GENERATE TEST
           </button>
-          <button type="button" class="save-test-btn" id="save-test-btn">
+          <button class="save-test-btn" id="save-test-btn">
             SAVE TEST
           </button>
-
         </div>
       </div>
     </div>
@@ -1144,7 +1073,7 @@ onclick="showPage('feedback')" -->
                 </div>
               </div>
             </div>
-
+            
             <div class="config-item">
               <h4>QUESTION TYPES</h4>
               <div class="checkbox-group">
@@ -1168,38 +1097,169 @@ onclick="showPage('feedback')" -->
             </div>
           </div>
         </div>
-
+        
         <div class="test-config-section">
           <h3>Test Content</h3>
           <div class="config-grid">
             <div class="config-item">
-              <h4>TOPICS TO INCLUDE</h4>
-              <textarea id="topic-input" placeholder="Enter topics (separated by commas)"
-                style="width: 100%; min-height: 100px; padding: 10px; border-radius: 6px; border: 1px solid #ddd; resize: vertical;"></textarea>
-            </div>
-            <!-- <div class="config-item">
               <h4>NUMBER OF QUESTIONS</h4>
-              <input type="number" id="question-count" min="1" max="50" value="10"
-                style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #ddd;">
-            </div> -->
-
-            <div class="config-item">
-              <h4>QUESTIONS PER TYPE</h4>
-              <div id="per-type-counts"></div> <!-- NEW -->
+              <input type="number" id="question-count" min="1" max="50" value="10" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #ddd;">
             </div>
-
             
+            <div class="config-item">
+              <h4>TOPICS TO INCLUDE</h4>
+              <textarea placeholder="Enter topics (separated by commas)" style="width: 100%; min-height: 100px; padding: 10px; border-radius: 6px; border: 1px solid #ddd; resize: vertical;"></textarea>
+            </div>
           </div>
         </div>
-
-
-        <button type="button" class="generate-btn" id="generate-test-btn">
+        
+        <button class="generate-btn" id="generate-test-btn">
           GENERATE TEST
         </button>
       </div>
     </div>
   </div>
-</body>
-<script type="module" src="/Neuro-Grade-Backend/services/teacher-services/teacher-practice-service.js"></script>
 
+  <script>
+    // Toggle mobile menu
+    document.getElementById('menu-toggle').addEventListener('click', function() {
+      document.getElementById('sidebar').classList.toggle('active');
+    });
+
+    // Add question functionality
+    document.getElementById('add-question-btn').addEventListener('click', function() {
+      const questionsList = document.querySelector('.questions-list');
+      const questionCount = questionsList.children.length + 1;
+      
+      const newQuestion = document.createElement('div');
+      newQuestion.className = 'question-item';
+      newQuestion.innerHTML = `
+        <div class="question-title">
+          <h3>QUESTION ${questionCount}</h3>
+          <button class="delete-question" style="margin-left: auto; background: #ff6b6b; color: white; border: none; border-radius: 4px; width: 25px; height: 25px; display: flex; align-items: center; justify-content: center; cursor: pointer;">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="question-content">
+          <textarea placeholder="Enter question content"></textarea>
+        </div>
+      `;
+      
+      // Add delete functionality to the new button
+      newQuestion.querySelector('.delete-question').addEventListener('click', function() {
+        newQuestion.remove();
+        // Renumber remaining questions
+        const questions = document.querySelectorAll('.question-title h3');
+        questions.forEach((question, index) => {
+          question.textContent = `QUESTION ${index + 1}`;
+        });
+      });
+      
+      questionsList.appendChild(newQuestion);
+    });
+
+    // Save test functionality
+    document.getElementById('save-test-btn').addEventListener('click', function() {
+      const testName = document.getElementById('test-name').value;
+      const testDescription = document.getElementById('test-description').value;
+      
+      if (!testName) {
+        alert('Please enter a test name');
+        return;
+      }
+      
+      // Simulate saving
+      this.textContent = 'SAVING...';
+      this.disabled = true;
+      
+      setTimeout(() => {
+        this.textContent = 'SAVED!';
+        this.style.background = '#2e7d32';
+        
+        setTimeout(() => {
+          this.textContent = 'SAVE TEST';
+          this.disabled = false;
+          this.style.background = '#8e44ad';
+        }, 2000);
+      }, 1500);
+    });
+
+    // AI Test Generation Modal functionality
+    const aiTestModal = document.getElementById('ai-test-modal');
+    const aiTestBtn = document.getElementById('ai-test-btn');
+    const closeModalBtn = document.getElementById('close-modal');
+    const generateTestBtn = document.getElementById('generate-test-btn');
+
+    // Open modal
+    aiTestBtn.addEventListener('click', function() {
+      aiTestModal.classList.add('active');
+    });
+
+    // Close modal
+    closeModalBtn.addEventListener('click', function() {
+      aiTestModal.classList.remove('active');
+    });
+
+    // Close modal when clicking outside
+    aiTestModal.addEventListener('click', function(e) {
+      if (e.target === aiTestModal) {
+        aiTestModal.classList.remove('active');
+      }
+    });
+
+    // Generate test functionality
+    generateTestBtn.addEventListener('click', function() {
+      this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> GENERATING...';
+      this.disabled = true;
+      
+      setTimeout(() => {
+        // Get selected options
+        const difficulty = document.querySelector('input[name="difficulty"]:checked').value;
+        const questionTypes = Array.from(document.querySelectorAll('input[name="question-types"]:checked'))
+          .map(input => input.value);
+        const questionCount = document.getElementById('question-count').value;
+        
+        // Apply to the main form
+        document.getElementById('test-name').value = `AI Generated ${difficulty.charAt(0).toUpperCase() + difficulty.slice(1)} Test`;
+        document.getElementById('test-description').value = `This test was automatically generated by our AI system with ${questionCount} ${difficulty}-level questions including ${questionTypes.join(', ')} type questions.`;
+        
+        // Clear existing questions
+        const questionsList = document.querySelector('.questions-list');
+        questionsList.innerHTML = '';
+        
+        // Add AI generated questions
+        for (let i = 1; i <= questionCount; i++) {
+          const newQuestion = document.createElement('div');
+          newQuestion.className = 'question-item';
+          newQuestion.innerHTML = `
+            <div class="question-title">
+              <h3>QUESTION ${i}</h3>
+            </div>
+            <div class="question-content">
+              <textarea placeholder="Enter question content">This is an AI-generated ${difficulty} difficulty question.</textarea>
+            </div>
+          `;
+          questionsList.appendChild(newQuestion);
+        }
+        
+        // Close modal and reset button
+        aiTestModal.classList.remove('active');
+        this.innerHTML = 'GENERATE TEST';
+        this.disabled = false;
+        
+        alert('Test successfully generated with AI!');
+      }, 2000);
+    });
+
+    // Test item selection
+    const testItems = document.querySelectorAll('.test-item');
+    testItems.forEach(item => {
+      item.addEventListener('click', function() {
+        testItems.forEach(i => i.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  </script>
+
+</body>
 </html>
